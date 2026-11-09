@@ -1,0 +1,220 @@
+{
+  "analysis_status": "completed",
+  "data_mode": "live",
+  "scope": "stock",
+  "symbols": [
+    "COMI.EGX"
+  ],
+  "sentiment": "Neutral",
+  "probabilities": {
+    "positive": 0.2725846982664532,
+    "negative": 0.2163636989167167,
+    "neutral": 0.5110515997641616
+  },
+  "score": 0.05622099934973651,
+  "news_count": 9,
+  "inference_item_count": 9,
+  "inference_http_requests": 1,
+  "providers": [
+    {
+      "provider": "EODHD",
+      "kind": "micro",
+      "status": "skipped_missing_api_key",
+      "symbol": "COMI.EGX"
+    },
+    {
+      "provider": "Google News RSS",
+      "kind": "micro",
+      "status": "used:7",
+      "query_url": "https://news.google.com/rss/search?q=%22Commercial+International+Bank%22+Egypt+EGX+stock+when%3A90d&hl=en-US&gl=US&ceid=US%3Aen",
+      "fetched_at": "2026-11-03T15:29:50.139453+00:00",
+      "elapsed_ms": 1577,
+      "http_status": 200,
+      "symbol": "COMI.EGX"
+    },
+    {
+      "provider": "EODHD general news + Egypt filter",
+      "kind": "macro",
+      "status": "skipped_missing_api_key"
+    },
+    {
+      "provider": "BBC RSS",
+      "kind": "macro",
+      "status": "used:2",
+      "query_url": "https://feeds.bbci.co.uk/news/world/middle_east/rss.xml",
+      "fetched_at": "2026-11-03T15:29:50.143662+00:00",
+      "elapsed_ms": 1352,
+      "http_status": 200
+    },
+    {
+      "provider": "Google News RSS",
+      "kind": "macro",
+      "status": "skipped_bbc_rss_nonempty"
+    }
+  ],
+  "aggregation": {
+    "rule": "Equal-weight arithmetic mean of per-headline class probabilities.",
+    "label_rule": "Bullish if positive is the strict maximum; Bearish if negative is the strict maximum; otherwise Neutral.",
+    "score_rule": "mean(positive) - mean(negative)",
+    "status": "Reconstruction choice; the article does not publish the aggregation formula."
+  },
+  "inference": {
+    "model": "ProsusAI/finbert",
+    "provider": "hf-inference",
+    "parameters": {
+      "top_k": 3,
+      "function_to_apply": "softmax"
+    },
+    "request_mode": "up to 15 headlines per HTTP request, fallback one per request; server: self-hosted (HF API format)",
+    "revision": null,
+    "device": null
+  },
+  "warnings": [
+    "Chỉ tìm thấy 9 tiêu đề; mục tiêu của bài báo là khoảng 10–15."
+  ],
+  "headlines": [
+    {
+      "title": "Democratic senator blames Egypt press crackdown on US military aid decision",
+      "url": "https://www.bbc.co.uk/news/articles/c63r529wn2vzo?at_medium=RSS&at_campaign=rss",
+      "published_at": "2026-10-30T15:17:11+00:00",
+      "source": "BBC RSS",
+      "kind": "macro",
+      "symbol": null,
+      "description": "Chris Murphy said waiving a human rights condition on aid paved the way for arrests of journalists.",
+      "probabilities": {
+        "negative": 0.9267898797988892,
+        "neutral": 0.05705468729138374,
+        "positive": 0.0161554254591465
+      },
+      "predicted_label": "Negative"
+    },
+    {
+      "title": "Egypt court fines journalist Lina Attalah and orders news site's closure",
+      "url": "https://www.bbc.co.uk/news/articles/cw8rz14k1jvxo?at_medium=RSS&at_campaign=rss",
+      "published_at": "2026-10-27T20:44:40+00:00",
+      "source": "BBC RSS",
+      "kind": "macro",
+      "symbol": null,
+      "description": "Amnesty International said the verdict against Attalah and independent outlet Mada Masr represented \"a crushing blow to press freedom\".",
+      "probabilities": {
+        "negative": 0.9079078435897827,
+        "neutral": 0.07592856884002686,
+        "positive": 0.016163673251867294
+      },
+      "predicted_label": "Negative"
+    },
+    {
+      "title": "COMMERCIAL INTERNATIONAL BANK EGYPT S A E (CBKD) Equity Price and Quote - London Stock Exchange",
+      "url": "https://news.google.com/rss/articles/CBMinwFBVV95cUxNZ2sxVnhtalJDS0JWUHVMNzZRUERhT2dJT1BnYkIwS0k3SEVSdlAwZjBzSV9BUFpzY2p1R1VKY250RGlaZmRIdTFlSXVuVEVGdnZZWUhXT2dreC1iVUlhUmhsbERkX1BZNjczWkQ4bHdsWUlTdjVHMi1WRnNFZ216dUVmVmhkdVVFN3NMZ3gydE9yc21RYk5TS0hQSE82bFk?oc=5",
+      "published_at": "2026-10-23T02:56:20+00:00",
+      "source": "Google News RSS",
+      "kind": "micro",
+      "symbol": "COMI.EGX",
+      "description": "<a href=\"https://news.google.com/rss/articles/CBMinwFBVV95cUxNZ2sxVnhtalJDS0JWUHVMNzZRUERhT2dJT1BnYkIwS0k3SEVSdlAwZjBzSV9BUFpzY2p1R1VKY250RGlaZmRIdTFlSXVuVEVGdnZZWUhXT2dreC1iVUlhUmhsbERkX1BZNjczWkQ4bHdsWUlTdjVHMi1WRnNFZ216dUVmVmhkdVVFN3NMZ3gydE9yc21RYk5TS0hQSE82bFk?oc=5\" target=\"_blank\">COMMERCIAL INTERNATIONAL BANK EGYPT S A E (CBKD) Equity Price and Quote</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">London Stock Exchange</font>",
+      "probabilities": {
+        "neutral": 0.9436763525009155,
+        "positive": 0.03430107235908508,
+        "negative": 0.022022563964128494
+      },
+      "predicted_label": "Neutral"
+    },
+    {
+      "title": "CIB commits up to EGP 2B to MNT-Halan’s international offering - آراب فاينانس",
+      "url": "https://news.google.com/rss/articles/CBMitAFBVV95cUxPcHFSV0k1YnNjQ2F2Z1huYVUyN1lUTmlVYzNyMzFtQUxqZnFVdTFkeTlTN3prd1pSMHNxUW9NNXVzeERhSndRZDJsUTRRRDlGcHlFOGdtRVd2MDQ5Z2pkLV9QZzdmVTlZYlNLd1o1RFFrc2Y3ZTVCbzNJamJqRVNadGljMWNNR09mdUxWUUQzaWpoWUJ3MnJfdW5XV0N2bHRQRVR0eGp6RnFMYWpiSW5seDlkV1I?oc=5",
+      "published_at": "2026-10-06T07:00:00+00:00",
+      "source": "Google News RSS",
+      "kind": "micro",
+      "symbol": "COMI.EGX",
+      "description": "<a href=\"https://news.google.com/rss/articles/CBMitAFBVV95cUxPcHFSV0k1YnNjQ2F2Z1huYVUyN1lUTmlVYzNyMzFtQUxqZnFVdTFkeTlTN3prd1pSMHNxUW9NNXVzeERhSndRZDJsUTRRRDlGcHlFOGdtRVd2MDQ5Z2pkLV9QZzdmVTlZYlNLd1o1RFFrc2Y3ZTVCbzNJamJqRVNadGljMWNNR09mdUxWUUQzaWpoWUJ3MnJfdW5XV0N2bHRQRVR0eGp6RnFMYWpiSW5seDlkV1I?oc=5\" target=\"_blank\">CIB commits up to EGP 2B to MNT-Halan’s international offering</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">آراب فاينانس</font>",
+      "probabilities": {
+        "neutral": 0.8382503986358643,
+        "positive": 0.15431912243366241,
+        "negative": 0.007430538535118103
+      },
+      "predicted_label": "Neutral"
+    },
+    {
+      "title": "CIB Egypt commits up to $37M to anchor MNT-Halan’s upcoming Egyptian Exchange flotation - Innovation Village",
+      "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxNM2ZCaUE1YVRvNnlTZHVPNTh5cGJEeHFFTlVXZU96SWgxLXZDS1JZX196WllCdWVDZ2JXOExqRlE4THlIS3FDVmFtakQ1VlNUN0NRRFRsU2R4cjZzS3NuLVRIS1RLYUFfTzhucmdUaUZQVjBTU2Q0Z3Ixb1VPbm41NmxyYUxIbU10NlVLWGxtWlFVdzQwdHlyNC1nRHJ6bzRJSDdxX1FrMksyYnc3cUJnbFhBTmRRZWxH?oc=5",
+      "published_at": "2026-10-06T07:00:00+00:00",
+      "source": "Google News RSS",
+      "kind": "micro",
+      "symbol": "COMI.EGX",
+      "description": "<a href=\"https://news.google.com/rss/articles/CBMiuAFBVV95cUxNM2ZCaUE1YVRvNnlTZHVPNTh5cGJEeHFFTlVXZU96SWgxLXZDS1JZX196WllCdWVDZ2JXOExqRlE4THlIS3FDVmFtakQ1VlNUN0NRRFRsU2R4cjZzS3NuLVRIS1RLYUFfTzhucmdUaUZQVjBTU2Q0Z3Ixb1VPbm41NmxyYUxIbU10NlVLWGxtWlFVdzQwdHlyNC1nRHJ6bzRJSDdxX1FrMksyYnc3cUJnbFhBTmRRZWxH?oc=5\" target=\"_blank\">CIB Egypt commits up to $37M to anchor MNT-Halan’s upcoming Egyptian Exchange flotation</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Innovation Village</font>",
+      "probabilities": {
+        "positive": 0.8403095006942749,
+        "neutral": 0.152080237865448,
+        "negative": 0.007610206957906485
+      },
+      "predicted_label": "Positive"
+    },
+    {
+      "title": "Egypt’s CIB to invest up to EGP 2bn in MNT-Halan share offering - Daily News Egypt",
+      "url": "https://news.google.com/rss/articles/CBMiqAFBVV95cUxQSkZPYm1EVVFiZ05WU0xFeGZXOElhVUFBcV9nWXNTZmNYZmNzeTVvN1pTeTJzNElJUE8tUEhIYWRNNms5cFBvV0ljakNSMzJJMmt6dlRHdlZubUZnZkhtM1NpV3U3OTdoT1pKS1hmRU9uNlFKb3hCWkNkNk05NjBuZlNtbGNfV3FycGdXcjJ1X2RFX3VEdW5TQmV0TW1tTHNRMFVueG03RXM?oc=5",
+      "published_at": "2026-10-05T07:00:00+00:00",
+      "source": "Google News RSS",
+      "kind": "micro",
+      "symbol": "COMI.EGX",
+      "description": "<a href=\"https://news.google.com/rss/articles/CBMiqAFBVV95cUxQSkZPYm1EVVFiZ05WU0xFeGZXOElhVUFBcV9nWXNTZmNYZmNzeTVvN1pTeTJzNElJUE8tUEhIYWRNNms5cFBvV0ljakNSMzJJMmt6dlRHdlZubUZnZkhtM1NpV3U3OTdoT1pKS1hmRU9uNlFKb3hCWkNkNk05NjBuZlNtbGNfV3FycGdXcjJ1X2RFX3VEdW5TQmV0TW1tTHNRMFVueG03RXM?oc=5\" target=\"_blank\">Egypt’s CIB to invest up to EGP 2bn in MNT-Halan share offering</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Daily News Egypt</font>",
+      "probabilities": {
+        "neutral": 0.8231567144393921,
+        "positive": 0.16691987216472626,
+        "negative": 0.009923437610268593
+      },
+      "predicted_label": "Neutral"
+    },
+    {
+      "title": "CIB Commits Up to USD 38.2M to MNT-Halan’s Proposed Offering - waya.media",
+      "url": "https://news.google.com/rss/articles/CBMihgFBVV95cUxNeHRCbVM0MXlKN0dsQzR2a3JibERYU1JZMkpMcTR0bzFBMnhRY2JqXzJULUhIaWFpRlRNOGk5dUJKN1k3OTNMOHNmMl9TZDB5cmZZV09TY2ZCSDlTX2d6NG92ZHZYb25rY3FwVFhIWUQ4UmxUVndSMzV5TlhrUXJLX3Jnbk9Pdw?oc=5",
+      "published_at": "2026-10-05T07:00:00+00:00",
+      "source": "Google News RSS",
+      "kind": "micro",
+      "symbol": "COMI.EGX",
+      "description": "<a href=\"https://news.google.com/rss/articles/CBMihgFBVV95cUxNeHRCbVM0MXlKN0dsQzR2a3JibERYU1JZMkpMcTR0bzFBMnhRY2JqXzJULUhIaWFpRlRNOGk5dUJKN1k3OTNMOHNmMl9TZDB5cmZZV09TY2ZCSDlTX2d6NG92ZHZYb25rY3FwVFhIWUQ4UmxUVndSMzV5TlhrUXJLX3Jnbk9Pdw?oc=5\" target=\"_blank\">CIB Commits Up to USD 38.2M to MNT-Halan’s Proposed Offering</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">waya.media</font>",
+      "probabilities": {
+        "neutral": 0.8900541067123413,
+        "positive": 0.10019145905971527,
+        "negative": 0.009754429571330547
+      },
+      "predicted_label": "Neutral"
+    },
+    {
+      "title": "Commercial International Bank Egypt stock holds firm as EGX banking sector benefits from currency mo - ad-hoc-news.de",
+      "url": "https://news.google.com/rss/articles/CBMi7AFBVV95cUxONHUtYUhtM1M4N2FsOUpyVFI3MnE1b2QtRi1oZVpVTERmTk9xNHBPN0l0RVFzRkVGT2JTRW8xa29pUmw3dmFpWG5WRjVCQmRubXkxSDR5dEdDcEFVa0Y1T0FyeEw4aU1TWFF3d094eng0ZFFuVG9fTW0zb1lXSHFkZ05kNWl4c21vVVNrcm9wMF9hLTJ1eEFpNGNuV1RBTVVDcmZPay1XMDZVemcwRnZfeHlnbUFad1JKVkllTXNsazRJdlFXdlVrQUtPWWgtMXZFaUdNaldwU1ZYaklaV2w1Y01XdVBiOGpMMW9BYQ?oc=5",
+      "published_at": "2026-09-19T07:00:00+00:00",
+      "source": "Google News RSS",
+      "kind": "micro",
+      "symbol": "COMI.EGX",
+      "description": "<a href=\"https://news.google.com/rss/articles/CBMi7AFBVV95cUxONHUtYUhtM1M4N2FsOUpyVFI3MnE1b2QtRi1oZVpVTERmTk9xNHBPN0l0RVFzRkVGT2JTRW8xa29pUmw3dmFpWG5WRjVCQmRubXkxSDR5dEdDcEFVa0Y1T0FyeEw4aU1TWFF3d094eng0ZFFuVG9fTW0zb1lXSHFkZ05kNWl4c21vVVNrcm9wMF9hLTJ1eEFpNGNuV1RBTVVDcmZPay1XMDZVemcwRnZfeHlnbUFad1JKVkllTXNsazRJdlFXdlVrQUtPWWgtMXZFaUdNaldwU1ZYaklaV2w1Y01XdVBiOGpMMW9BYQ?oc=5\" target=\"_blank\">Commercial International Bank Egypt stock holds firm as EGX banking sector benefits from currency mo</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">ad-hoc-news.de</font>",
+      "probabilities": {
+        "positive": 0.9406929612159729,
+        "neutral": 0.036540381610393524,
+        "negative": 0.022766608744859695
+      },
+      "predicted_label": "Positive"
+    },
+    {
+      "title": "CIB Executes Major Block Trade Worth EGP 2.46 Billion in EG - Wansom AI",
+      "url": "https://news.google.com/rss/articles/CBMi0AFBVV95cUxQNHJtR0V3UFdlak9FZU5LT0Fyd2tlaVFEcGlxWS1PUUdRZXZ1Mi1wOGhJQmwwa055OWJzeVNmdUhjdlRlMTNhcEtRMXZhaGZBR0FvOGU2LUlVMndtN3V5cmwzcktub1ZmemFfWnVJVlFmdDdrZTcyUmwxVjVXRFk3NTNiRGZsTHlSMXJ5OFBlRGNsNHBzd1VSY0NubENKRV9SZ09Ga2pVQW5vNGsyeDg4djdkYWV3akxlRnZjelcxNDVzTFFtTEVmek1XUGV2STJs?oc=5",
+      "published_at": "2026-08-18T07:00:00+00:00",
+      "source": "Google News RSS",
+      "kind": "micro",
+      "symbol": "COMI.EGX",
+      "description": "<a href=\"https://news.google.com/rss/articles/CBMi0AFBVV95cUxQNHJtR0V3UFdlak9FZU5LT0Fyd2tlaVFEcGlxWS1PUUdRZXZ1Mi1wOGhJQmwwa055OWJzeVNmdUhjdlRlMTNhcEtRMXZhaGZBR0FvOGU2LUlVMndtN3V5cmwzcktub1ZmemFfWnVJVlFmdDdrZTcyUmwxVjVXRFk3NTNiRGZsTHlSMXJ5OFBlRGNsNHBzd1VSY0NubENKRV9SZ09Ga2pVQW5vNGsyeDg4djdkYWV3akxlRnZjelcxNDVzTFFtTEVmek1XUGV2STJs?oc=5\" target=\"_blank\">CIB Executes Major Block Trade Worth EGP 2.46 Billion in EG</a>&nbsp;&nbsp;<font color=\"#6f6f6f\">Wansom AI</font>",
+      "probabilities": {
+        "neutral": 0.7827229499816895,
+        "positive": 0.1842091977596283,
+        "negative": 0.03306778147816658
+      },
+      "predicted_label": "Neutral"
+    }
+  ],
+  "data_freshness": {
+    "live": true,
+    "requested_at_utc": "2026-11-03T15:29:50.139453+00:00",
+    "news_collection_ms": 1601,
+    "total_ms": 2161,
+    "completed_at_utc": "2026-11-03T15:29:52.294751+00:00",
+    "news_cache": "Không dùng bộ nhớ: mỗi yêu cầu lấy tin mới từ nguồn."
+  }
+}

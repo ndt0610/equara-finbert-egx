@@ -1,0 +1,330 @@
+{
+  "checked_at_utc": "2026-11-01T11:24:05.7159145Z",
+  "verification": "Real RSS plus local Transformers inference via FastAPI; EODHD and HF Inference API disabled",
+  "health": {
+    "status": "ok",
+    "app_version": "0.2.0",
+    "data_mode": "live",
+    "model": "ProsusAI/finbert",
+    "inference_provider": "transformers-local",
+    "inference_revision": "0bc2ac10dda6929bcb1f77ccc43c7ec5c424f031",
+    "inference_device": "cpu",
+    "hf_token_configured": false,
+    "eodhd_token_configured": false,
+    "inference_request_mode": "local Transformers batch inference; no inference HTTP requests"
+  },
+  "single_stock": {
+    "analysis_status": "completed",
+    "data_mode": "live",
+    "scope": "stock",
+    "symbols": [
+      "COMI.EGX"
+    ],
+    "sentiment": "Bullish",
+    "probabilities": {
+      "positive": 0.3960483130067587,
+      "negative": 0.3749995741993189,
+      "neutral": 0.22895208448171617
+    },
+    "score": 0.021048738807439793,
+    "news_count": 5,
+    "inference_item_count": 5,
+    "inference_http_requests": 0,
+    "inference": {
+      "model": "ProsusAI/finbert",
+      "provider": "transformers-local",
+      "parameters": {
+        "top_k": 3,
+        "function_to_apply": "softmax"
+      },
+      "request_mode": "local Transformers batch inference; no inference HTTP requests",
+      "revision": "0bc2ac10dda6929bcb1f77ccc43c7ec5c424f031",
+      "device": "cpu"
+    },
+    "providers": [
+      {
+        "provider": "EODHD",
+        "kind": "micro",
+        "status": "skipped_missing_api_key"
+      },
+      {
+        "provider": "Google News RSS",
+        "kind": "micro",
+        "status": "ok:3"
+      },
+      {
+        "provider": "EODHD general news + Egypt filter",
+        "kind": "macro",
+        "status": "skipped_missing_api_key"
+      },
+      {
+        "provider": "BBC RSS",
+        "kind": "macro",
+        "status": "ok:2"
+      }
+    ],
+    "warnings": [
+      "Chỉ tìm thấy 5 tiêu đề; mục tiêu của bài báo là khoảng 10–15."
+    ],
+    "probability_sums_valid": true,
+    "headlines": [
+      {
+        "title": "Democratic senator blames Egypt press crackdown on US military aid decision",
+        "source": "BBC RSS",
+        "kind": "macro",
+        "symbol": null,
+        "published_at": "2026-10-30T22:17:11+07:00",
+        "predicted_label": "Negative",
+        "probabilities": {
+          "positive": 0.0161554254591465,
+          "negative": 0.9267898797988892,
+          "neutral": 0.05705468729138374
+        },
+        "url": "https://www.bbc.co.uk/news/articles/c63r529wn2vzo?at_medium=RSS&at_campaign=rss"
+      },
+      {
+        "title": "Egypt court fines journalist Lina Attalah and orders news site's closure",
+        "source": "BBC RSS",
+        "kind": "macro",
+        "symbol": null,
+        "published_at": "2026-10-28T03:44:40+07:00",
+        "predicted_label": "Negative",
+        "probabilities": {
+          "positive": 0.016163671389222145,
+          "negative": 0.9079077243804932,
+          "neutral": 0.07592856884002686
+        },
+        "url": "https://www.bbc.co.uk/news/articles/cw8rz14k1jvxo?at_medium=RSS&at_campaign=rss"
+      },
+      {
+        "title": "CIB Egypt commits up to $37M to anchor MNT-Halan’s upcoming Egyptian Exchange flotation - Innovation Village",
+        "source": "Google News RSS",
+        "kind": "micro",
+        "symbol": "COMI.EGX",
+        "published_at": "2026-10-06T14:00:00+07:00",
+        "predicted_label": "Positive",
+        "probabilities": {
+          "positive": 0.8403096795082092,
+          "negative": 0.0076102083548903465,
+          "neutral": 0.15208007395267487
+        },
+        "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxNM2ZCaUE1YVRvNnlTZHVPNTh5cGJEeHFFTlVXZU96SWgxLXZDS1JZX196WllCdWVDZ2JXOExqRlE4THlIS3FDVmFtakQ1VlNUN0NRRFRsU2R4cjZzS3NuLVRIS1RLYUFfTzhucmdUaUZQVjBTU2Q0Z3Ixb1VPbm41NmxyYUxIbU10NlVLWGxtWlFVdzQwdHlyNC1nRHJ6bzRJSDdxX1FrMksyYnc3cUJnbFhBTmRRZWxH?oc=5"
+      },
+      {
+        "title": "Egypt’s CIB to invest up to EGP 2bn in MNT-Halan share offering - Daily News Egypt",
+        "source": "Google News RSS",
+        "kind": "micro",
+        "symbol": "COMI.EGX",
+        "published_at": "2026-10-05T14:00:00+07:00",
+        "predicted_label": "Neutral",
+        "probabilities": {
+          "positive": 0.16691982746124268,
+          "negative": 0.009923442266881466,
+          "neutral": 0.8231567144393921
+        },
+        "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxOZTJYbnhwa1ZmdU9Ya0FpSF9XVHQ0dkxVZzMyZmlfRGJfYW5ocW5sOEVheEtYTGVZTjI2c0RSWVJ0cnczd2ZiOENXWS0wR0Rfck9HNDNSU0ZFTG1YOEtqS0tWMU5NZ050MEhlTUxsODIxS0R2MXRhVl9KUDZRLVd0R2x2UEpUT1hJdnEwUW1CQmpZeGttZGNTR3RyQTJCWk81NTNB?oc=5"
+      },
+      {
+        "title": "Commercial International Bank Egypt stock holds firm as EGX banking sector benefits from currency mo - ad-hoc-news.de",
+        "source": "Google News RSS",
+        "kind": "micro",
+        "symbol": "COMI.EGX",
+        "published_at": "2026-09-19T14:00:00+07:00",
+        "predicted_label": "Positive",
+        "probabilities": {
+          "positive": 0.9406929612159729,
+          "negative": 0.022766616195440292,
+          "neutral": 0.036540377885103226
+        },
+        "url": "https://news.google.com/rss/articles/CBMi7AFBVV95cUxONHUtYUhtM1M4N2FsOUpyVFI3MnE1b2QtRi1oZVpVTERmTk9xNHBPN0l0RVFzRkVGT2JTRW8xa29pUmw3dmFpWG5WRjVCQmRubXkxSDR5dEdDcEFVa0Y1T0FyeEw4aU1TWFF3d094eng0ZFFuVG9fTW0zb1lXSHFkZ05kNWl4c21vVVNrcm9wMF9hLTJ1eEFpNGNuV1RBTVVDcmZPay1XMDZVemcwRnZfeHlnbUFad1JKVkllTXNsazRJdlFXdlVrQUtPWWgtMXZFaUdNaldwU1ZYaklaV2w1Y01XdVBiOGpMMW9BYQ?oc=5"
+      }
+    ]
+  },
+  "five_symbol_portfolio": {
+    "analysis_status": "completed",
+    "data_mode": "live",
+    "scope": "portfolio",
+    "symbols": [
+      "COMI.EGX",
+      "ETEL.EGX",
+      "FWRY.EGX",
+      "ADIB.EGX",
+      "EFIH.EGX"
+    ],
+    "sentiment": "Neutral",
+    "probabilities": {
+      "positive": 0.2500078783680995,
+      "negative": 0.3138757834676653,
+      "neutral": 0.43611635578175384
+    },
+    "score": -0.0638679050995658,
+    "news_count": 6,
+    "inference_item_count": 6,
+    "inference_http_requests": 0,
+    "inference": {
+      "model": "ProsusAI/finbert",
+      "provider": "transformers-local",
+      "parameters": {
+        "top_k": 3,
+        "function_to_apply": "softmax"
+      },
+      "request_mode": "local Transformers batch inference; no inference HTTP requests",
+      "revision": "0bc2ac10dda6929bcb1f77ccc43c7ec5c424f031",
+      "device": "cpu"
+    },
+    "providers": [
+      {
+        "provider": "EODHD",
+        "kind": "micro",
+        "status": "skipped_missing_api_key"
+      },
+      {
+        "provider": "Google News RSS",
+        "kind": "micro",
+        "status": "ok:3"
+      },
+      {
+        "provider": "EODHD",
+        "kind": "micro",
+        "status": "skipped_missing_api_key"
+      },
+      {
+        "provider": "Google News RSS",
+        "kind": "micro",
+        "status": "ok:0"
+      },
+      {
+        "provider": "EODHD",
+        "kind": "micro",
+        "status": "skipped_missing_api_key"
+      },
+      {
+        "provider": "Google News RSS",
+        "kind": "micro",
+        "status": "ok:0"
+      },
+      {
+        "provider": "EODHD",
+        "kind": "micro",
+        "status": "skipped_missing_api_key"
+      },
+      {
+        "provider": "Google News RSS",
+        "kind": "micro",
+        "status": "ok:1"
+      },
+      {
+        "provider": "EODHD",
+        "kind": "micro",
+        "status": "skipped_missing_api_key"
+      },
+      {
+        "provider": "Google News RSS",
+        "kind": "micro",
+        "status": "ok:1"
+      },
+      {
+        "provider": "EODHD general news + Egypt filter",
+        "kind": "macro",
+        "status": "skipped_missing_api_key"
+      },
+      {
+        "provider": "BBC RSS",
+        "kind": "macro",
+        "status": "ok:2"
+      }
+    ],
+    "warnings": [
+      "Không tìm thấy tin micro cho ETEL.EGX.",
+      "Không tìm thấy tin micro cho FWRY.EGX.",
+      "Chỉ tìm thấy 2 tiêu đề macro; mục tiêu trong bài báo là khoảng 4."
+    ],
+    "probability_sums_valid": true,
+    "headlines": [
+      {
+        "title": "Democratic senator blames Egypt press crackdown on US military aid decision",
+        "source": "BBC RSS",
+        "kind": "macro",
+        "symbol": null,
+        "published_at": "2026-10-30T22:17:11+07:00",
+        "predicted_label": "Negative",
+        "probabilities": {
+          "positive": 0.0161554254591465,
+          "negative": 0.9267898797988892,
+          "neutral": 0.05705468729138374
+        },
+        "url": "https://www.bbc.co.uk/news/articles/c63r529wn2vzo?at_medium=RSS&at_campaign=rss"
+      },
+      {
+        "title": "Egypt court fines journalist Lina Attalah and orders news site's closure",
+        "source": "BBC RSS",
+        "kind": "macro",
+        "symbol": null,
+        "published_at": "2026-10-28T03:44:40+07:00",
+        "predicted_label": "Negative",
+        "probabilities": {
+          "positive": 0.016163673251867294,
+          "negative": 0.9079078435897827,
+          "neutral": 0.07592856884002686
+        },
+        "url": "https://www.bbc.co.uk/news/articles/cw8rz14k1jvxo?at_medium=RSS&at_campaign=rss"
+      },
+      {
+        "title": "E-finance stock: E-finance approves EGP 410.6 million dividend for E-finance stock - ad-hoc-news.de",
+        "source": "Google News RSS",
+        "kind": "micro",
+        "symbol": "EFIH.EGX",
+        "published_at": "2026-10-22T08:26:28+07:00",
+        "predicted_label": "Neutral",
+        "probabilities": {
+          "positive": 0.42550036311149597,
+          "negative": 0.012697426602244377,
+          "neutral": 0.5618022084236145
+        },
+        "url": "https://news.google.com/rss/articles/CBMi1wFBVV95cUxQTERrTUc4VDh2VUlBbUprajAyR3pvWk5udVF3cEU5ZFM4d3duMExyNnZfSUF2ZVBMd2FyN3lqaFlCRmRlSWJDakc2Zks4S3hxTlhHckYzSDgySFZtbWpHSXpmb1R3WkdSU0tFTFRnTlE0WndCYVdyZW84Zmk3NmZkOFRSSkViUW5GYTZZdnFVSDBvUzEzN05yemlyZGZsMUp1RGJ4Z09tbzNmOXFiRE54b2hDRlBFRHVaYzhKN0gtOTZBQlRGSWhOT0dGWjN6TlItUTNkY213MA?oc=5"
+      },
+      {
+        "title": "CIB Egypt commits up to $37M to anchor MNT-Halan’s upcoming Egyptian Exchange flotation - Innovation Village",
+        "source": "Google News RSS",
+        "kind": "micro",
+        "symbol": "COMI.EGX",
+        "published_at": "2026-10-06T14:00:00+07:00",
+        "predicted_label": "Positive",
+        "probabilities": {
+          "positive": 0.8403095006942749,
+          "negative": 0.007610206957906485,
+          "neutral": 0.152080237865448
+        },
+        "url": "https://news.google.com/rss/articles/CBMiuAFBVV95cUxNM2ZCaUE1YVRvNnlTZHVPNTh5cGJEeHFFTlVXZU96SWgxLXZDS1JZX196WllCdWVDZ2JXOExqRlE4THlIS3FDVmFtakQ1VlNUN0NRRFRsU2R4cjZzS3NuLVRIS1RLYUFfTzhucmdUaUZQVjBTU2Q0Z3Ixb1VPbm41NmxyYUxIbU10NlVLWGxtWlFVdzQwdHlyNC1nRHJ6bzRJSDdxX1FrMksyYnc3cUJnbFhBTmRRZWxH?oc=5"
+      },
+      {
+        "title": "Egypt’s CIB to invest up to EGP 2bn in MNT-Halan share offering - Daily News Egypt",
+        "source": "Google News RSS",
+        "kind": "micro",
+        "symbol": "COMI.EGX",
+        "published_at": "2026-10-05T14:00:00+07:00",
+        "predicted_label": "Neutral",
+        "probabilities": {
+          "positive": 0.16691987216472626,
+          "negative": 0.009923437610268593,
+          "neutral": 0.8231567144393921
+        },
+        "url": "https://news.google.com/rss/articles/CBMiowFBVV95cUxOZTJYbnhwa1ZmdU9Ya0FpSF9XVHQ0dkxVZzMyZmlfRGJfYW5ocW5sOEVheEtYTGVZTjI2c0RSWVJ0cnczd2ZiOENXWS0wR0Rfck9HNDNSU0ZFTG1YOEtqS0tWMU5NZ050MEhlTUxsODIxS0R2MXRhVl9KUDZRLVd0R2x2UEpUT1hJdnEwUW1CQmpZeGttZGNTR3RyQTJCWk81NTNB?oc=5"
+      },
+      {
+        "title": "Abu Dhabi Islamic Bank Egypt stock adds payment security certification - AD HOC NEWS",
+        "source": "Google News RSS",
+        "kind": "micro",
+        "symbol": "ADIB.EGX",
+        "published_at": "2026-08-10T14:00:00+07:00",
+        "predicted_label": "Neutral",
+        "probabilities": {
+          "positive": 0.03499843552708626,
+          "negative": 0.01832590624690056,
+          "neutral": 0.946675717830658
+        },
+        "url": "https://news.google.com/rss/articles/CBMiyAFBVV95cUxPVVRDR3dldzEwd1o4NGRsZkdKS1lsSkdCUTRzU1p2NDMxTHMwVmlPUUcxVWp5c1RMeVk4RW9pNXo3SXpsZVk3TUxreUNhYzJvRExYODVrV1lxLWo4MXZrV21SY1JQRHZ0cG5hR0tob29WZWlPMTBOQzlZVEVBZ0p2VFh5OHlQdDNKbXM4dzdidWF3X1BMWGhhTFhweG5zYjVQODJTU0E3RnJnMWplbEhGTmtrZjVjZ2tVb1c4Qnp2VWFrLVpDX1hxaQ?oc=5"
+      }
+    ]
+  }
+}

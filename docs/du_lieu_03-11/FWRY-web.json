@@ -1,0 +1,115 @@
+{
+  "analysis_status": "completed",
+  "data_mode": "live",
+  "scope": "stock",
+  "symbols": [
+    "FWRY.EGX"
+  ],
+  "sentiment": "Bearish",
+  "probabilities": {
+    "positive": 0.016159542836248875,
+    "negative": 0.9173488616943359,
+    "neutral": 0.06649158708751202
+  },
+  "score": -0.9011893188580871,
+  "news_count": 2,
+  "inference_item_count": 2,
+  "inference_http_requests": 1,
+  "providers": [
+    {
+      "provider": "EODHD",
+      "kind": "micro",
+      "status": "skipped_missing_api_key",
+      "symbol": "FWRY.EGX"
+    },
+    {
+      "provider": "Google News RSS",
+      "kind": "micro",
+      "status": "empty:0",
+      "query_url": "https://news.google.com/rss/search?q=%22Fawry%22+Egypt+EGX+stock+when%3A90d&hl=en-US&gl=US&ceid=US%3Aen",
+      "fetched_at": "2026-11-03T15:29:53.631653+00:00",
+      "elapsed_ms": 558,
+      "http_status": 200,
+      "symbol": "FWRY.EGX"
+    },
+    {
+      "provider": "EODHD general news + Egypt filter",
+      "kind": "macro",
+      "status": "skipped_missing_api_key"
+    },
+    {
+      "provider": "BBC RSS",
+      "kind": "macro",
+      "status": "used:2",
+      "query_url": "https://feeds.bbci.co.uk/news/world/middle_east/rss.xml",
+      "fetched_at": "2026-11-03T15:29:53.634766+00:00",
+      "elapsed_ms": 223,
+      "http_status": 200
+    },
+    {
+      "provider": "Google News RSS",
+      "kind": "macro",
+      "status": "skipped_bbc_rss_nonempty"
+    }
+  ],
+  "aggregation": {
+    "rule": "Equal-weight arithmetic mean of per-headline class probabilities.",
+    "label_rule": "Bullish if positive is the strict maximum; Bearish if negative is the strict maximum; otherwise Neutral.",
+    "score_rule": "mean(positive) - mean(negative)",
+    "status": "Reconstruction choice; the article does not publish the aggregation formula."
+  },
+  "inference": {
+    "model": "ProsusAI/finbert",
+    "provider": "hf-inference",
+    "parameters": {
+      "top_k": 3,
+      "function_to_apply": "softmax"
+    },
+    "request_mode": "up to 15 headlines per HTTP request, fallback one per request; server: self-hosted (HF API format)",
+    "revision": null,
+    "device": null
+  },
+  "warnings": [
+    "Chỉ tìm thấy 2 tiêu đề; mục tiêu của bài báo là khoảng 10–15."
+  ],
+  "headlines": [
+    {
+      "title": "Democratic senator blames Egypt press crackdown on US military aid decision",
+      "url": "https://www.bbc.co.uk/news/articles/c63r529wn2vzo?at_medium=RSS&at_campaign=rss",
+      "published_at": "2026-10-30T15:17:11+00:00",
+      "source": "BBC RSS",
+      "kind": "macro",
+      "symbol": null,
+      "description": "Chris Murphy said waiving a human rights condition on aid paved the way for arrests of journalists.",
+      "probabilities": {
+        "negative": 0.9267898797988892,
+        "neutral": 0.05705460533499718,
+        "positive": 0.016155412420630455
+      },
+      "predicted_label": "Negative"
+    },
+    {
+      "title": "Egypt court fines journalist Lina Attalah and orders news site's closure",
+      "url": "https://www.bbc.co.uk/news/articles/cw8rz14k1jvxo?at_medium=RSS&at_campaign=rss",
+      "published_at": "2026-10-27T20:44:40+00:00",
+      "source": "BBC RSS",
+      "kind": "macro",
+      "symbol": null,
+      "description": "Amnesty International said the verdict against Attalah and independent outlet Mada Masr represented \"a crushing blow to press freedom\".",
+      "probabilities": {
+        "negative": 0.9079078435897827,
+        "neutral": 0.07592856884002686,
+        "positive": 0.016163673251867294
+      },
+      "predicted_label": "Negative"
+    }
+  ],
+  "data_freshness": {
+    "live": true,
+    "requested_at_utc": "2026-11-03T15:29:53.631653+00:00",
+    "news_collection_ms": 560,
+    "total_ms": 649,
+    "completed_at_utc": "2026-11-03T15:29:54.281859+00:00",
+    "news_cache": "Không dùng bộ nhớ: mỗi yêu cầu lấy tin mới từ nguồn."
+  }
+}

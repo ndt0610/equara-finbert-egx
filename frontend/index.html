@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Bản demo sentiment EGX tái dựng theo kiến trúc bài báo FinBERT.">
+  <title>Equara AI · Tin EGX theo mã và vốn</title>
+  <link rel="stylesheet" href="/static/style.css?v=observed-capital-v3">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="Equara AI demo home">
+        <span class="brand-mark">E</span>
+        <span><strong>Equara AI</strong><small>Tin EGX theo mã và vốn</small></span>
+      </a>
+      <div class="topbar-right">
+        <span id="modeBadge" class="mode-badge mode-loading">Đang kiểm tra</span>
+        <span class="market-chip">EGX · Egypt</span>
+      </div>
+    </header>
+
+    <main>
+      <section class="intro">
+        <div class="eyebrow">Tin doanh nghiệp · EGX</div>
+        <h1>Xem sắc thái tin<br><span>theo mã và tỷ trọng vốn.</span></h1>
+        <p>Bản tái dựng phục vụ học tập: điểm mô tả ngôn ngữ của tiêu đề đã tìm thấy, không phải dự báo giá hay tư vấn đầu tư.</p>
+      </section>
+
+      <div id="modeNotice" class="notice hidden" role="status"></div>
+
+      <section class="workspace" aria-label="Phân tích sắc thái tin">
+        <div class="tabs" role="tablist" aria-label="Loại phân tích">
+          <button id="stockTab" class="tab active" role="tab" aria-selected="true" type="button">Một cổ phiếu</button>
+          <button id="portfolioTab" class="tab" role="tab" aria-selected="false" type="button">Danh mục</button>
+          <button id="weightedTab" class="tab" role="tab" aria-selected="false" type="button">Danh mục theo vốn (nâng cấp)</button>
+          <button id="tinGiaTab" class="tab" role="tab" aria-selected="false" type="button">Tin + Giá</button>
+        </div>
+
+        <section id="stockPanel" class="input-panel" role="tabpanel">
+          <form id="stockForm">
+            <label for="stockSymbol">Mã cổ phiếu EGX</label>
+            <div class="input-row">
+              <input id="stockSymbol" name="symbol" list="egxSymbols" value="COMI" placeholder="Ví dụ: COMI" autocomplete="off" required>
+              <datalist id="egxSymbols">
+                <option value="COMI">Commercial International Bank</option>
+                <option value="ETEL">Telecom Egypt</option>
+                <option value="FWRY">Fawry</option>
+                <option value="ADIB">Abu Dhabi Islamic Bank Egypt</option>
+                <option value="EFIH">E-finance for Digital and Financial Investments</option>
+              </datalist>
+              <button class="primary-button" type="submit">Phân tích <span aria-hidden="true">→</span></button>
+            </div>
+            <p class="field-help">Xem sắc thái các tiêu đề đã tìm thấy cho một mã. Điểm tin không phải phần trăm biến động hay dự báo giá.</p>
+          </form>
+        </section>
+
+        <section id="portfolioPanel" class="input-panel hidden" role="tabpanel">
+          <form id="portfolioForm">
+            <label for="portfolioSymbols">Mã cổ phiếu trong danh mục (tối đa 5)</label>
+            <input id="portfolioSymbols" name="symbols" value="COMI, ETEL, FWRY, ADIB, EFIH" placeholder="COMI, ETEL, FWRY" autocomplete="off" required>
+            <div class="input-row portfolio-submit">
+              <p class="field-help">Bản tái dựng gộp tin doanh nghiệp và vĩ mô; mỗi tiêu đề được tính một phiếu, không theo tỷ trọng vốn.</p>
+              <button class="primary-button" type="submit">Phân tích danh mục <span aria-hidden="true">→</span></button>
+            </div>
+          </form>
+        </section>
+
+        <!-- [NÂNG CẤP C] Độ phủ tin theo vốn: chỉ nhập mã và phần vốn -->
+        <section id="weightedPanel" class="input-panel hidden" role="tabpanel">
+          <p class="cov-intro"><strong>Dành cho người đang nắm giữ nhiều mã EGX:</strong> điều chỉnh trọng số trên chính các tin và điểm chấm của tab Danh mục gốc; vốn chia đều phải ra cùng điểm. Xem từng mã và tin vĩ mô đóng góp bao nhiêu. Điểm này mô tả tin đã thu thập; không phải lợi suất dự kiến hay tư vấn đầu tư.</p>
+          <form id="weightedForm">
+            <label>Nhập mã EGX và tỷ trọng vốn của từng mã (tối đa 5 mã).</label>
+            <div class="compare-toggle-row">
+              <label class="compare-toggle"><input id="compareToggle" type="checkbox"> So sánh A và B trên cùng lô tin</label>
+              <button id="comparePreset" class="link-button compare-only hidden" type="button">Điền ví dụ: A 5 mã × 20%, B 50/30/20</button>
+            </div>
+            <div class="position-grid" id="positionRows">
+              <span class="grid-head">Mã EGX</span><span class="grid-head" id="weightHeadA">Tỷ trọng vốn (%)</span><span class="grid-head compare-only hidden">Danh mục B (%)</span>
+              <input name="symbol" value="COMI" aria-label="Mã 1"><input name="weight" type="number" min="0" step="any" value="50" aria-label="Phần vốn mã 1"><input name="weightB" class="compare-only hidden" type="number" min="0" step="any" value="" placeholder="0" aria-label="Phần vốn mã 1 ở danh mục B">
+              <input name="symbol" value="ETEL" aria-label="Mã 2"><input name="weight" type="number" min="0" step="any" value="30" aria-label="Phần vốn mã 2"><input name="weightB" class="compare-only hidden" type="number" min="0" step="any" value="" placeholder="0" aria-label="Phần vốn mã 2 ở danh mục B">
+              <input name="symbol" value="FWRY" aria-label="Mã 3"><input name="weight" type="number" min="0" step="any" value="20" aria-label="Phần vốn mã 3"><input name="weightB" class="compare-only hidden" type="number" min="0" step="any" value="" placeholder="0" aria-label="Phần vốn mã 3 ở danh mục B">
+              <input name="symbol" value="" placeholder="(trống)" aria-label="Mã 4"><input name="weight" type="number" min="0" step="any" value="" aria-label="Phần vốn mã 4"><input name="weightB" class="compare-only hidden" type="number" min="0" step="any" value="" placeholder="0" aria-label="Phần vốn mã 4 ở danh mục B">
+              <input name="symbol" value="" placeholder="(trống)" aria-label="Mã 5"><input name="weight" type="number" min="0" step="any" value="" aria-label="Phần vốn mã 5"><input name="weightB" class="compare-only hidden" type="number" min="0" step="any" value="" placeholder="0" aria-label="Phần vốn mã 5 ở danh mục B">
+            </div>
+            <div class="input-row portfolio-submit">
+              <p class="field-help">Dùng chung lô tin với tab Danh mục khi cùng danh sách mã, gồm cả vĩ mô. Chia vốn đều: điểm bằng bản gốc. Đổi vốn: chỉ đổi hệ số tin riêng; không lấy thêm hoặc chấm lại tin. Công thức và đóng góp hiển thị dưới kết quả.</p>
+              <button class="primary-button" type="submit"><span id="weightedSubmitText">Xem sắc thái theo vốn</span> <span aria-hidden="true">→</span></button>
+            </div>
+          </form>
+        </section>
+
+        <section id="tinGiaPanel" class="input-panel hidden" role="tabpanel" aria-labelledby="tinGiaTab">
+          <div class="tg-intro">
+            <strong>Đối chiếu tin công ty với giá EGX — dành cho người đang nắm cổ phiếu</strong>
+            <p>Luồng xử lý: xác minh tin thuộc công ty → chấm và gom tiêu đề gần trùng → giảm trọng số tin cũ → đối chiếu điểm tin với giá đóng cửa 5 phiên và lịch sử biến động riêng của mã → áp bảng điều kiện để ra Mua mạnh / Mua / Giữ / Bán / Bán mạnh. Mua nghĩa là cân nhắc mua thêm; Bán nghĩa là cân nhắc giảm vị thế. Đây là quy tắc thử nghiệm, chưa chứng minh hiệu quả đầu tư.</p>
+          </div>
+          <form id="tinGiaForm">
+            <label for="tinGiaSymbol">Mã cổ phiếu EGX</label>
+            <div class="input-row">
+              <input id="tinGiaSymbol" name="symbol" list="egxSymbols" value="COMI" placeholder="Ví dụ: COMI" autocomplete="off" required>
+              <button class="primary-button" type="submit">Đối chiếu Tin + Giá <span aria-hidden="true">→</span></button>
+            </div>
+            <p class="field-help">Nhập mã EGX. Hiện giá lấy từ lịch sử đóng cửa ngày Yahoo Finance qua yfinance; có thể chậm ít nhất một phiên và không phải giá trong phiên. Tin công ty chỉ vào điểm khi đã xác minh được mã và ngày đăng. Không tự làm mới ngầm.</p>
+          </form>
+          <section id="tinGiaMarketView" aria-label="Giá và biểu đồ EGX từ TradingView"></section>
+          <div class="tg-provider-note">
+            <strong>Giới hạn dữ liệu hiện tại</strong>
+            <span>Yahoo qua yfinance cung cấp giá ngày và có thể chậm một phiên; không phải giá trong phiên. Nếu có EODHD, nguồn này công bố giá cổ phiếu toàn cầu trễ khoảng 15–20 phút. Chưa xác minh bid/ask hoặc giá EGX thời gian thực.</span>
+          </div>
+        </section>
+
+        <section id="result" class="result hidden" aria-live="polite"></section>
+      </section>
+
+      <section class="flow-note" aria-label="Luồng xử lý">
+        <div class="flow-step"><span>01</span><strong>Lấy tiêu đề tin</strong><small id="newsFlowDetail">EODHD News · RSS bổ sung</small></div>
+        <div class="flow-arrow" aria-hidden="true">→</div>
+        <div class="flow-step"><span>02</span><strong>FinBERT chấm tin</strong><small id="inferenceFlowDetail">Đang đọc cấu hình…</small></div>
+        <div class="flow-arrow" aria-hidden="true">→</div>
+        <div class="flow-step"><span>03</span><strong>Gộp sắc thái</strong><small>Bản bài báo · theo vốn</small></div>
+      </section>
+    </main>
+
+    <footer>
+      <span>Bản tái dựng kiến trúc · tiêu đề tiếng Anh · thị trường EGX</span>
+      <a href="https://huggingface.co/ProsusAI/finbert" target="_blank" rel="noreferrer">Model: ProsusAI/finbert ↗</a>
+    </footer>
+  </div>
+  <script src="/static/original-capital.js?v=original-batch-v1" defer></script>
+  <script src="/static/app.js?v=original-batch-v1" defer></script>
+</body>
+</html>

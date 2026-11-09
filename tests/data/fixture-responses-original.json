@@ -1,0 +1,2824 @@
+{
+ "1 8010 /api/health": {
+  "body": null,
+  "http": 200,
+  "response": {
+   "status": "ok",
+   "app_version": "0.2.0",
+   "data_mode": "fixture",
+   "model": "ProsusAI/finbert",
+   "inference_provider": "fixture",
+   "inference_revision": null,
+   "inference_device": null,
+   "hf_token_configured": false,
+   "eodhd_token_configured": false,
+   "inference_request_mode": "fixture; no model calls"
+  }
+ },
+ "2 8010 /api/stocks": {
+  "body": null,
+  "http": 200,
+  "response": {
+   "market": "EGX",
+   "items": [
+    {
+     "symbol": "COMI",
+     "eodhd_symbol": "COMI.EGX",
+     "name": "Commercial International Bank (CIB)",
+     "article_example": true
+    },
+    {
+     "symbol": "ETEL",
+     "eodhd_symbol": "ETEL.EGX",
+     "name": "Telecom Egypt",
+     "article_example": true
+    },
+    {
+     "symbol": "FWRY",
+     "eodhd_symbol": "FWRY.EGX",
+     "name": "Fawry",
+     "article_example": true
+    }
+   ],
+   "note": "Ba mã ví dụ trong bài báo; API cũng nhận mã EGX khác theo định dạng mã.EGX."
+  }
+ },
+ "3 8010 /api/sentiment/stock": {
+  "body": {
+   "symbol": "COMI"
+  },
+  "http": 200,
+  "response": {
+   "analysis_status": "completed",
+   "data_mode": "fixture",
+   "scope": "stock",
+   "symbols": [
+    "COMI.EGX"
+   ],
+   "sentiment": "Bullish",
+   "probabilities": {
+    "positive": 0.41250000000000003,
+    "negative": 0.2625,
+    "neutral": 0.325
+   },
+   "score": 0.15000000000000002,
+   "news_count": 12,
+   "inference_item_count": 0,
+   "inference_http_requests": 0,
+   "providers": [
+    {
+     "provider": "DEMO FIXTURE",
+     "kind": "micro",
+     "status": "fixture:4"
+    },
+    {
+     "provider": "DEMO FIXTURE",
+     "kind": "macro",
+     "status": "fixture:8"
+    }
+   ],
+   "aggregation": {
+    "rule": "Equal-weight arithmetic mean of per-headline class probabilities.",
+    "label_rule": "Bullish if positive is the strict maximum; Bearish if negative is the strict maximum; otherwise Neutral.",
+    "score_rule": "mean(positive) - mean(negative)",
+    "status": "Reconstruction choice; the article does not publish the aggregation formula."
+   },
+   "inference": {
+    "model": "ProsusAI/finbert",
+    "provider": "fixture vectors (no model call)",
+    "parameters": {
+     "top_k": 3,
+     "function_to_apply": "softmax"
+    },
+    "request_mode": "fixture lookup; no HTTP request"
+   },
+   "warnings": [
+    "Fixture data only. Titles and probability vectors below are illustrative and were not fetched from news providers or inferred by FinBERT."
+   ],
+   "headlines": [
+    {
+     "title": "[FIXTURE] Commercial International Bank reports higher quarterly earnings",
+     "symbol": "COMI.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.78,
+      "negative": 0.08,
+      "neutral": 0.14
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] CIB expands financing options for Egyptian small businesses",
+     "symbol": "COMI.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.66,
+      "negative": 0.12,
+      "neutral": 0.22
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] CIB confirms stable capital position after market update",
+     "symbol": "COMI.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.38,
+      "negative": 0.16,
+      "neutral": 0.46
+     },
+     "predicted_label": "Neutral"
+    },
+    {
+     "title": "[FIXTURE] CIB reviews funding costs amid changing domestic rates",
+     "symbol": "COMI.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.19,
+      "negative": 0.54,
+      "neutral": 0.27
+     },
+     "predicted_label": "Negative"
+    },
+    {
+     "title": "[FIXTURE] Egypt's inflation measure eases in an illustrative macro update",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.62,
+      "negative": 0.08,
+      "neutral": 0.3
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] Egypt's central bank keeps its policy rate unchanged in a sample scenario",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.18,
+      "negative": 0.21,
+      "neutral": 0.61
+     },
+     "predicted_label": "Neutral"
+    },
+    {
+     "title": "[FIXTURE] Egyptian firms face currency volatility in a sample headline",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.11,
+      "negative": 0.69,
+      "neutral": 0.2
+     },
+     "predicted_label": "Negative"
+    },
+    {
+     "title": "[FIXTURE] Egypt outlines fiscal measures intended to support growth",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.71,
+      "negative": 0.06,
+      "neutral": 0.23
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] Cairo market participants review updated economic indicators",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.22,
+      "negative": 0.19,
+      "neutral": 0.59
+     },
+     "predicted_label": "Neutral"
+    },
+    {
+     "title": "[FIXTURE] Egypt's manufacturing activity changes in an illustrative report",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.26,
+      "negative": 0.23,
+      "neutral": 0.51
+     },
+     "predicted_label": "Neutral"
+    },
+    {
+     "title": "[FIXTURE] Egyptian export outlook improves in a sample business headline",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.75,
+      "negative": 0.07,
+      "neutral": 0.18
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] Egypt's domestic demand slows in a sample economic update",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.09,
+      "negative": 0.72,
+      "neutral": 0.19
+     },
+     "predicted_label": "Negative"
+    }
+   ]
+  }
+ },
+ "4 8011 /api/sentiment/stock": {
+  "body": {
+   "symbol": "COMI"
+  },
+  "http": 200,
+  "response": {
+   "analysis_status": "completed",
+   "data_mode": "fixture",
+   "scope": "stock",
+   "symbols": [
+    "COMI.EGX"
+   ],
+   "sentiment": "Bullish",
+   "probabilities": {
+    "positive": 0.41250000000000003,
+    "negative": 0.2625,
+    "neutral": 0.325
+   },
+   "score": 0.15000000000000002,
+   "news_count": 12,
+   "inference_item_count": 0,
+   "inference_http_requests": 0,
+   "providers": [
+    {
+     "provider": "DEMO FIXTURE",
+     "kind": "micro",
+     "status": "fixture:4"
+    },
+    {
+     "provider": "DEMO FIXTURE",
+     "kind": "macro",
+     "status": "fixture:8"
+    }
+   ],
+   "aggregation": {
+    "rule": "Equal-weight arithmetic mean of per-headline class probabilities.",
+    "label_rule": "Bullish if positive is the strict maximum; Bearish if negative is the strict maximum; otherwise Neutral.",
+    "score_rule": "mean(positive) - mean(negative)",
+    "status": "Reconstruction choice; the article does not publish the aggregation formula."
+   },
+   "inference": {
+    "model": "ProsusAI/finbert",
+    "provider": "fixture vectors (no model call)",
+    "parameters": {
+     "top_k": 3,
+     "function_to_apply": "softmax"
+    },
+    "request_mode": "fixture lookup; no HTTP request"
+   },
+   "warnings": [
+    "Fixture data only. Titles and probability vectors below are illustrative and were not fetched from news providers or inferred by FinBERT."
+   ],
+   "headlines": [
+    {
+     "title": "[FIXTURE] Commercial International Bank reports higher quarterly earnings",
+     "symbol": "COMI.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.78,
+      "negative": 0.08,
+      "neutral": 0.14
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] CIB expands financing options for Egyptian small businesses",
+     "symbol": "COMI.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.66,
+      "negative": 0.12,
+      "neutral": 0.22
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] CIB confirms stable capital position after market update",
+     "symbol": "COMI.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.38,
+      "negative": 0.16,
+      "neutral": 0.46
+     },
+     "predicted_label": "Neutral"
+    },
+    {
+     "title": "[FIXTURE] CIB reviews funding costs amid changing domestic rates",
+     "symbol": "COMI.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.19,
+      "negative": 0.54,
+      "neutral": 0.27
+     },
+     "predicted_label": "Negative"
+    },
+    {
+     "title": "[FIXTURE] Egypt's inflation measure eases in an illustrative macro update",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.62,
+      "negative": 0.08,
+      "neutral": 0.3
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] Egypt's central bank keeps its policy rate unchanged in a sample scenario",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.18,
+      "negative": 0.21,
+      "neutral": 0.61
+     },
+     "predicted_label": "Neutral"
+    },
+    {
+     "title": "[FIXTURE] Egyptian firms face currency volatility in a sample headline",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.11,
+      "negative": 0.69,
+      "neutral": 0.2
+     },
+     "predicted_label": "Negative"
+    },
+    {
+     "title": "[FIXTURE] Egypt outlines fiscal measures intended to support growth",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.71,
+      "negative": 0.06,
+      "neutral": 0.23
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] Cairo market participants review updated economic indicators",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.22,
+      "negative": 0.19,
+      "neutral": 0.59
+     },
+     "predicted_label": "Neutral"
+    },
+    {
+     "title": "[FIXTURE] Egypt's manufacturing activity changes in an illustrative report",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.26,
+      "negative": 0.23,
+      "neutral": 0.51
+     },
+     "predicted_label": "Neutral"
+    },
+    {
+     "title": "[FIXTURE] Egyptian export outlook improves in a sample business headline",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.75,
+      "negative": 0.07,
+      "neutral": 0.18
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] Egypt's domestic demand slows in a sample economic update",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.09,
+      "negative": 0.72,
+      "neutral": 0.19
+     },
+     "predicted_label": "Negative"
+    }
+   ]
+  }
+ },
+ "5 8010 /api/sentiment/stock?symbol=COMI": {
+  "body": null,
+  "http": 200,
+  "response": {
+   "analysis_status": "completed",
+   "data_mode": "fixture",
+   "scope": "stock",
+   "symbols": [
+    "COMI.EGX"
+   ],
+   "sentiment": "Bullish",
+   "probabilities": {
+    "positive": 0.41250000000000003,
+    "negative": 0.2625,
+    "neutral": 0.325
+   },
+   "score": 0.15000000000000002,
+   "news_count": 12,
+   "inference_item_count": 0,
+   "inference_http_requests": 0,
+   "providers": [
+    {
+     "provider": "DEMO FIXTURE",
+     "kind": "micro",
+     "status": "fixture:4"
+    },
+    {
+     "provider": "DEMO FIXTURE",
+     "kind": "macro",
+     "status": "fixture:8"
+    }
+   ],
+   "aggregation": {
+    "rule": "Equal-weight arithmetic mean of per-headline class probabilities.",
+    "label_rule": "Bullish if positive is the strict maximum; Bearish if negative is the strict maximum; otherwise Neutral.",
+    "score_rule": "mean(positive) - mean(negative)",
+    "status": "Reconstruction choice; the article does not publish the aggregation formula."
+   },
+   "inference": {
+    "model": "ProsusAI/finbert",
+    "provider": "fixture vectors (no model call)",
+    "parameters": {
+     "top_k": 3,
+     "function_to_apply": "softmax"
+    },
+    "request_mode": "fixture lookup; no HTTP request"
+   },
+   "warnings": [
+    "Fixture data only. Titles and probability vectors below are illustrative and were not fetched from news providers or inferred by FinBERT."
+   ],
+   "headlines": [
+    {
+     "title": "[FIXTURE] Commercial International Bank reports higher quarterly earnings",
+     "symbol": "COMI.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.78,
+      "negative": 0.08,
+      "neutral": 0.14
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] CIB expands financing options for Egyptian small businesses",
+     "symbol": "COMI.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.66,
+      "negative": 0.12,
+      "neutral": 0.22
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] CIB confirms stable capital position after market update",
+     "symbol": "COMI.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.38,
+      "negative": 0.16,
+      "neutral": 0.46
+     },
+     "predicted_label": "Neutral"
+    },
+    {
+     "title": "[FIXTURE] CIB reviews funding costs amid changing domestic rates",
+     "symbol": "COMI.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.19,
+      "negative": 0.54,
+      "neutral": 0.27
+     },
+     "predicted_label": "Negative"
+    },
+    {
+     "title": "[FIXTURE] Egypt's inflation measure eases in an illustrative macro update",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.62,
+      "negative": 0.08,
+      "neutral": 0.3
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] Egypt's central bank keeps its policy rate unchanged in a sample scenario",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.18,
+      "negative": 0.21,
+      "neutral": 0.61
+     },
+     "predicted_label": "Neutral"
+    },
+    {
+     "title": "[FIXTURE] Egyptian firms face currency volatility in a sample headline",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.11,
+      "negative": 0.69,
+      "neutral": 0.2
+     },
+     "predicted_label": "Negative"
+    },
+    {
+     "title": "[FIXTURE] Egypt outlines fiscal measures intended to support growth",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.71,
+      "negative": 0.06,
+      "neutral": 0.23
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] Cairo market participants review updated economic indicators",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.22,
+      "negative": 0.19,
+      "neutral": 0.59
+     },
+     "predicted_label": "Neutral"
+    },
+    {
+     "title": "[FIXTURE] Egypt's manufacturing activity changes in an illustrative report",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.26,
+      "negative": 0.23,
+      "neutral": 0.51
+     },
+     "predicted_label": "Neutral"
+    },
+    {
+     "title": "[FIXTURE] Egyptian export outlook improves in a sample business headline",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.75,
+      "negative": 0.07,
+      "neutral": 0.18
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] Egypt's domestic demand slows in a sample economic update",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.09,
+      "negative": 0.72,
+      "neutral": 0.19
+     },
+     "predicted_label": "Negative"
+    }
+   ]
+  }
+ },
+ "6 8010 /api/sentiment/stock": {
+  "body": {
+   "symbol": "ETEL"
+  },
+  "http": 200,
+  "response": {
+   "analysis_status": "completed",
+   "data_mode": "fixture",
+   "scope": "stock",
+   "symbols": [
+    "ETEL.EGX"
+   ],
+   "sentiment": "Bullish",
+   "probabilities": {
+    "positive": 0.39666666666666667,
+    "negative": 0.27499999999999997,
+    "neutral": 0.3283333333333333
+   },
+   "score": 0.1216666666666667,
+   "news_count": 12,
+   "inference_item_count": 0,
+   "inference_http_requests": 0,
+   "providers": [
+    {
+     "provider": "DEMO FIXTURE",
+     "kind": "micro",
+     "status": "fixture:4"
+    },
+    {
+     "provider": "DEMO FIXTURE",
+     "kind": "macro",
+     "status": "fixture:8"
+    }
+   ],
+   "aggregation": {
+    "rule": "Equal-weight arithmetic mean of per-headline class probabilities.",
+    "label_rule": "Bullish if positive is the strict maximum; Bearish if negative is the strict maximum; otherwise Neutral.",
+    "score_rule": "mean(positive) - mean(negative)",
+    "status": "Reconstruction choice; the article does not publish the aggregation formula."
+   },
+   "inference": {
+    "model": "ProsusAI/finbert",
+    "provider": "fixture vectors (no model call)",
+    "parameters": {
+     "top_k": 3,
+     "function_to_apply": "softmax"
+    },
+    "request_mode": "fixture lookup; no HTTP request"
+   },
+   "warnings": [
+    "Fixture data only. Titles and probability vectors below are illustrative and were not fetched from news providers or inferred by FinBERT."
+   ],
+   "headlines": [
+    {
+     "title": "[FIXTURE] Telecom Egypt announces network investment across local markets",
+     "symbol": "ETEL.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.72,
+      "negative": 0.09,
+      "neutral": 0.19
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] Telecom Egypt reports growth in broadband subscriptions",
+     "symbol": "ETEL.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.73,
+      "negative": 0.07,
+      "neutral": 0.2
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] Telecom Egypt outlines capital spending plans for the next quarter",
+     "symbol": "ETEL.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.25,
+      "negative": 0.21,
+      "neutral": 0.54
+     },
+     "predicted_label": "Neutral"
+    },
+    {
+     "title": "[FIXTURE] Telecom Egypt faces higher operating costs in a market update",
+     "symbol": "ETEL.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.12,
+      "negative": 0.68,
+      "neutral": 0.2
+     },
+     "predicted_label": "Negative"
+    },
+    {
+     "title": "[FIXTURE] Egypt's inflation measure eases in an illustrative macro update",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.62,
+      "negative": 0.08,
+      "neutral": 0.3
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] Egypt's central bank keeps its policy rate unchanged in a sample scenario",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.18,
+      "negative": 0.21,
+      "neutral": 0.61
+     },
+     "predicted_label": "Neutral"
+    },
+    {
+     "title": "[FIXTURE] Egyptian firms face currency volatility in a sample headline",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.11,
+      "negative": 0.69,
+      "neutral": 0.2
+     },
+     "predicted_label": "Negative"
+    },
+    {
+     "title": "[FIXTURE] Egypt outlines fiscal measures intended to support growth",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.71,
+      "negative": 0.06,
+      "neutral": 0.23
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] Cairo market participants review updated economic indicators",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.22,
+      "negative": 0.19,
+      "neutral": 0.59
+     },
+     "predicted_label": "Neutral"
+    },
+    {
+     "title": "[FIXTURE] Egypt's manufacturing activity changes in an illustrative report",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.26,
+      "negative": 0.23,
+      "neutral": 0.51
+     },
+     "predicted_label": "Neutral"
+    },
+    {
+     "title": "[FIXTURE] Egyptian export outlook improves in a sample business headline",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.75,
+      "negative": 0.07,
+      "neutral": 0.18
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] Egypt's domestic demand slows in a sample economic update",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.09,
+      "negative": 0.72,
+      "neutral": 0.19
+     },
+     "predicted_label": "Negative"
+    }
+   ]
+  }
+ },
+ "7 8011 /api/sentiment/stock": {
+  "body": {
+   "symbol": "ETEL"
+  },
+  "http": 200,
+  "response": {
+   "analysis_status": "completed",
+   "data_mode": "fixture",
+   "scope": "stock",
+   "symbols": [
+    "ETEL.EGX"
+   ],
+   "sentiment": "Bullish",
+   "probabilities": {
+    "positive": 0.39666666666666667,
+    "negative": 0.27499999999999997,
+    "neutral": 0.3283333333333333
+   },
+   "score": 0.1216666666666667,
+   "news_count": 12,
+   "inference_item_count": 0,
+   "inference_http_requests": 0,
+   "providers": [
+    {
+     "provider": "DEMO FIXTURE",
+     "kind": "micro",
+     "status": "fixture:4"
+    },
+    {
+     "provider": "DEMO FIXTURE",
+     "kind": "macro",
+     "status": "fixture:8"
+    }
+   ],
+   "aggregation": {
+    "rule": "Equal-weight arithmetic mean of per-headline class probabilities.",
+    "label_rule": "Bullish if positive is the strict maximum; Bearish if negative is the strict maximum; otherwise Neutral.",
+    "score_rule": "mean(positive) - mean(negative)",
+    "status": "Reconstruction choice; the article does not publish the aggregation formula."
+   },
+   "inference": {
+    "model": "ProsusAI/finbert",
+    "provider": "fixture vectors (no model call)",
+    "parameters": {
+     "top_k": 3,
+     "function_to_apply": "softmax"
+    },
+    "request_mode": "fixture lookup; no HTTP request"
+   },
+   "warnings": [
+    "Fixture data only. Titles and probability vectors below are illustrative and were not fetched from news providers or inferred by FinBERT."
+   ],
+   "headlines": [
+    {
+     "title": "[FIXTURE] Telecom Egypt announces network investment across local markets",
+     "symbol": "ETEL.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.72,
+      "negative": 0.09,
+      "neutral": 0.19
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] Telecom Egypt reports growth in broadband subscriptions",
+     "symbol": "ETEL.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.73,
+      "negative": 0.07,
+      "neutral": 0.2
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] Telecom Egypt outlines capital spending plans for the next quarter",
+     "symbol": "ETEL.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.25,
+      "negative": 0.21,
+      "neutral": 0.54
+     },
+     "predicted_label": "Neutral"
+    },
+    {
+     "title": "[FIXTURE] Telecom Egypt faces higher operating costs in a market update",
+     "symbol": "ETEL.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.12,
+      "negative": 0.68,
+      "neutral": 0.2
+     },
+     "predicted_label": "Negative"
+    },
+    {
+     "title": "[FIXTURE] Egypt's inflation measure eases in an illustrative macro update",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.62,
+      "negative": 0.08,
+      "neutral": 0.3
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] Egypt's central bank keeps its policy rate unchanged in a sample scenario",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.18,
+      "negative": 0.21,
+      "neutral": 0.61
+     },
+     "predicted_label": "Neutral"
+    },
+    {
+     "title": "[FIXTURE] Egyptian firms face currency volatility in a sample headline",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.11,
+      "negative": 0.69,
+      "neutral": 0.2
+     },
+     "predicted_label": "Negative"
+    },
+    {
+     "title": "[FIXTURE] Egypt outlines fiscal measures intended to support growth",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.71,
+      "negative": 0.06,
+      "neutral": 0.23
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] Cairo market participants review updated economic indicators",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.22,
+      "negative": 0.19,
+      "neutral": 0.59
+     },
+     "predicted_label": "Neutral"
+    },
+    {
+     "title": "[FIXTURE] Egypt's manufacturing activity changes in an illustrative report",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.26,
+      "negative": 0.23,
+      "neutral": 0.51
+     },
+     "predicted_label": "Neutral"
+    },
+    {
+     "title": "[FIXTURE] Egyptian export outlook improves in a sample business headline",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.75,
+      "negative": 0.07,
+      "neutral": 0.18
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] Egypt's domestic demand slows in a sample economic update",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.09,
+      "negative": 0.72,
+      "neutral": 0.19
+     },
+     "predicted_label": "Negative"
+    }
+   ]
+  }
+ },
+ "8 8010 /api/sentiment/portfolio": {
+  "body": {
+   "symbols": [
+    "COMI",
+    "ETEL",
+    "FWRY"
+   ]
+  },
+  "http": 200,
+  "response": {
+   "analysis_status": "completed",
+   "data_mode": "fixture",
+   "scope": "portfolio",
+   "symbols": [
+    "COMI.EGX",
+    "ETEL.EGX",
+    "FWRY.EGX"
+   ],
+   "sentiment": "Bullish",
+   "probabilities": {
+    "positive": 0.603,
+    "negative": 0.153,
+    "neutral": 0.244
+   },
+   "score": 0.44999999999999996,
+   "news_count": 10,
+   "inference_item_count": 0,
+   "inference_http_requests": 0,
+   "providers": [
+    {
+     "provider": "DEMO FIXTURE",
+     "kind": "micro:COMI.EGX",
+     "status": "fixture:2"
+    },
+    {
+     "provider": "DEMO FIXTURE",
+     "kind": "micro:ETEL.EGX",
+     "status": "fixture:2"
+    },
+    {
+     "provider": "DEMO FIXTURE",
+     "kind": "micro:FWRY.EGX",
+     "status": "fixture:2"
+    },
+    {
+     "provider": "DEMO FIXTURE",
+     "kind": "macro",
+     "status": "fixture:4"
+    }
+   ],
+   "aggregation": {
+    "rule": "Equal-weight arithmetic mean of per-headline class probabilities.",
+    "label_rule": "Bullish if positive is the strict maximum; Bearish if negative is the strict maximum; otherwise Neutral.",
+    "score_rule": "mean(positive) - mean(negative)",
+    "status": "Reconstruction choice; the article does not publish the aggregation formula."
+   },
+   "inference": {
+    "model": "ProsusAI/finbert",
+    "provider": "fixture vectors (no model call)",
+    "parameters": {
+     "top_k": 3,
+     "function_to_apply": "softmax"
+    },
+    "request_mode": "fixture lookup; no HTTP request"
+   },
+   "warnings": [
+    "Fixture data only. Titles and probability vectors below are illustrative and were not fetched from news providers or inferred by FinBERT."
+   ],
+   "headlines": [
+    {
+     "title": "[FIXTURE] Commercial International Bank reports higher quarterly earnings",
+     "symbol": "COMI.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.78,
+      "negative": 0.08,
+      "neutral": 0.14
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] CIB expands financing options for Egyptian small businesses",
+     "symbol": "COMI.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.66,
+      "negative": 0.12,
+      "neutral": 0.22
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] Telecom Egypt announces network investment across local markets",
+     "symbol": "ETEL.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.72,
+      "negative": 0.09,
+      "neutral": 0.19
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] Telecom Egypt reports growth in broadband subscriptions",
+     "symbol": "ETEL.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.73,
+      "negative": 0.07,
+      "neutral": 0.2
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] Fawry reports stronger digital payment volumes in Egypt",
+     "symbol": "FWRY.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.83,
+      "negative": 0.05,
+      "neutral": 0.12
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] Fawry expands merchant services in a company update",
+     "symbol": "FWRY.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.69,
+      "negative": 0.08,
+      "neutral": 0.23
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] Egypt's inflation measure eases in an illustrative macro update",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.62,
+      "negative": 0.08,
+      "neutral": 0.3
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] Egypt's central bank keeps its policy rate unchanged in a sample scenario",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.18,
+      "negative": 0.21,
+      "neutral": 0.61
+     },
+     "predicted_label": "Neutral"
+    },
+    {
+     "title": "[FIXTURE] Egyptian firms face currency volatility in a sample headline",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.11,
+      "negative": 0.69,
+      "neutral": 0.2
+     },
+     "predicted_label": "Negative"
+    },
+    {
+     "title": "[FIXTURE] Egypt outlines fiscal measures intended to support growth",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.71,
+      "negative": 0.06,
+      "neutral": 0.23
+     },
+     "predicted_label": "Positive"
+    }
+   ]
+  }
+ },
+ "9 8011 /api/sentiment/portfolio": {
+  "body": {
+   "symbols": [
+    "COMI",
+    "ETEL",
+    "FWRY"
+   ]
+  },
+  "http": 200,
+  "response": {
+   "analysis_status": "completed",
+   "data_mode": "fixture",
+   "scope": "portfolio",
+   "symbols": [
+    "COMI.EGX",
+    "ETEL.EGX",
+    "FWRY.EGX"
+   ],
+   "sentiment": "Bullish",
+   "probabilities": {
+    "positive": 0.603,
+    "negative": 0.153,
+    "neutral": 0.244
+   },
+   "score": 0.44999999999999996,
+   "news_count": 10,
+   "inference_item_count": 0,
+   "inference_http_requests": 0,
+   "providers": [
+    {
+     "provider": "DEMO FIXTURE",
+     "kind": "micro:COMI.EGX",
+     "status": "fixture:2"
+    },
+    {
+     "provider": "DEMO FIXTURE",
+     "kind": "micro:ETEL.EGX",
+     "status": "fixture:2"
+    },
+    {
+     "provider": "DEMO FIXTURE",
+     "kind": "micro:FWRY.EGX",
+     "status": "fixture:2"
+    },
+    {
+     "provider": "DEMO FIXTURE",
+     "kind": "macro",
+     "status": "fixture:4"
+    }
+   ],
+   "aggregation": {
+    "rule": "Equal-weight arithmetic mean of per-headline class probabilities.",
+    "label_rule": "Bullish if positive is the strict maximum; Bearish if negative is the strict maximum; otherwise Neutral.",
+    "score_rule": "mean(positive) - mean(negative)",
+    "status": "Reconstruction choice; the article does not publish the aggregation formula."
+   },
+   "inference": {
+    "model": "ProsusAI/finbert",
+    "provider": "fixture vectors (no model call)",
+    "parameters": {
+     "top_k": 3,
+     "function_to_apply": "softmax"
+    },
+    "request_mode": "fixture lookup; no HTTP request"
+   },
+   "warnings": [
+    "Fixture data only. Titles and probability vectors below are illustrative and were not fetched from news providers or inferred by FinBERT."
+   ],
+   "headlines": [
+    {
+     "title": "[FIXTURE] Commercial International Bank reports higher quarterly earnings",
+     "symbol": "COMI.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.78,
+      "negative": 0.08,
+      "neutral": 0.14
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] CIB expands financing options for Egyptian small businesses",
+     "symbol": "COMI.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.66,
+      "negative": 0.12,
+      "neutral": 0.22
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] Telecom Egypt announces network investment across local markets",
+     "symbol": "ETEL.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.72,
+      "negative": 0.09,
+      "neutral": 0.19
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] Telecom Egypt reports growth in broadband subscriptions",
+     "symbol": "ETEL.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.73,
+      "negative": 0.07,
+      "neutral": 0.2
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] Fawry reports stronger digital payment volumes in Egypt",
+     "symbol": "FWRY.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.83,
+      "negative": 0.05,
+      "neutral": 0.12
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] Fawry expands merchant services in a company update",
+     "symbol": "FWRY.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.69,
+      "negative": 0.08,
+      "neutral": 0.23
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] Egypt's inflation measure eases in an illustrative macro update",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.62,
+      "negative": 0.08,
+      "neutral": 0.3
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] Egypt's central bank keeps its policy rate unchanged in a sample scenario",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.18,
+      "negative": 0.21,
+      "neutral": 0.61
+     },
+     "predicted_label": "Neutral"
+    },
+    {
+     "title": "[FIXTURE] Egyptian firms face currency volatility in a sample headline",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.11,
+      "negative": 0.69,
+      "neutral": 0.2
+     },
+     "predicted_label": "Negative"
+    },
+    {
+     "title": "[FIXTURE] Egypt outlines fiscal measures intended to support growth",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.71,
+      "negative": 0.06,
+      "neutral": 0.23
+     },
+     "predicted_label": "Positive"
+    }
+   ]
+  }
+ },
+ "10 8010 /api/sentiment/portfolio?symbols=COMI,ETEL,FWRY": {
+  "body": null,
+  "http": 200,
+  "response": {
+   "analysis_status": "completed",
+   "data_mode": "fixture",
+   "scope": "portfolio",
+   "symbols": [
+    "COMI.EGX",
+    "ETEL.EGX",
+    "FWRY.EGX"
+   ],
+   "sentiment": "Bullish",
+   "probabilities": {
+    "positive": 0.603,
+    "negative": 0.153,
+    "neutral": 0.244
+   },
+   "score": 0.44999999999999996,
+   "news_count": 10,
+   "inference_item_count": 0,
+   "inference_http_requests": 0,
+   "providers": [
+    {
+     "provider": "DEMO FIXTURE",
+     "kind": "micro:COMI.EGX",
+     "status": "fixture:2"
+    },
+    {
+     "provider": "DEMO FIXTURE",
+     "kind": "micro:ETEL.EGX",
+     "status": "fixture:2"
+    },
+    {
+     "provider": "DEMO FIXTURE",
+     "kind": "micro:FWRY.EGX",
+     "status": "fixture:2"
+    },
+    {
+     "provider": "DEMO FIXTURE",
+     "kind": "macro",
+     "status": "fixture:4"
+    }
+   ],
+   "aggregation": {
+    "rule": "Equal-weight arithmetic mean of per-headline class probabilities.",
+    "label_rule": "Bullish if positive is the strict maximum; Bearish if negative is the strict maximum; otherwise Neutral.",
+    "score_rule": "mean(positive) - mean(negative)",
+    "status": "Reconstruction choice; the article does not publish the aggregation formula."
+   },
+   "inference": {
+    "model": "ProsusAI/finbert",
+    "provider": "fixture vectors (no model call)",
+    "parameters": {
+     "top_k": 3,
+     "function_to_apply": "softmax"
+    },
+    "request_mode": "fixture lookup; no HTTP request"
+   },
+   "warnings": [
+    "Fixture data only. Titles and probability vectors below are illustrative and were not fetched from news providers or inferred by FinBERT."
+   ],
+   "headlines": [
+    {
+     "title": "[FIXTURE] Commercial International Bank reports higher quarterly earnings",
+     "symbol": "COMI.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.78,
+      "negative": 0.08,
+      "neutral": 0.14
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] CIB expands financing options for Egyptian small businesses",
+     "symbol": "COMI.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.66,
+      "negative": 0.12,
+      "neutral": 0.22
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] Telecom Egypt announces network investment across local markets",
+     "symbol": "ETEL.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.72,
+      "negative": 0.09,
+      "neutral": 0.19
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] Telecom Egypt reports growth in broadband subscriptions",
+     "symbol": "ETEL.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.73,
+      "negative": 0.07,
+      "neutral": 0.2
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] Fawry reports stronger digital payment volumes in Egypt",
+     "symbol": "FWRY.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.83,
+      "negative": 0.05,
+      "neutral": 0.12
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] Fawry expands merchant services in a company update",
+     "symbol": "FWRY.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.69,
+      "negative": 0.08,
+      "neutral": 0.23
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] Egypt's inflation measure eases in an illustrative macro update",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.62,
+      "negative": 0.08,
+      "neutral": 0.3
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] Egypt's central bank keeps its policy rate unchanged in a sample scenario",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.18,
+      "negative": 0.21,
+      "neutral": 0.61
+     },
+     "predicted_label": "Neutral"
+    },
+    {
+     "title": "[FIXTURE] Egyptian firms face currency volatility in a sample headline",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.11,
+      "negative": 0.69,
+      "neutral": 0.2
+     },
+     "predicted_label": "Negative"
+    },
+    {
+     "title": "[FIXTURE] Egypt outlines fiscal measures intended to support growth",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.71,
+      "negative": 0.06,
+      "neutral": 0.23
+     },
+     "predicted_label": "Positive"
+    }
+   ]
+  }
+ },
+ "11 8010 /api/sentiment/portfolio": {
+  "body": {
+   "symbols": [
+    "COMI",
+    "ETEL",
+    "FWRY",
+    "ADIB",
+    "EFIH"
+   ]
+  },
+  "http": 200,
+  "response": {
+   "analysis_status": "completed",
+   "data_mode": "fixture",
+   "scope": "portfolio",
+   "symbols": [
+    "COMI.EGX",
+    "ETEL.EGX",
+    "FWRY.EGX",
+    "ADIB.EGX",
+    "EFIH.EGX"
+   ],
+   "sentiment": "Bullish",
+   "probabilities": {
+    "positive": 0.5614285714285715,
+    "negative": 0.16071428571428573,
+    "neutral": 0.27785714285714286
+   },
+   "score": 0.4007142857142858,
+   "news_count": 14,
+   "inference_item_count": 0,
+   "inference_http_requests": 0,
+   "providers": [
+    {
+     "provider": "DEMO FIXTURE",
+     "kind": "micro:COMI.EGX",
+     "status": "fixture:2"
+    },
+    {
+     "provider": "DEMO FIXTURE",
+     "kind": "micro:ETEL.EGX",
+     "status": "fixture:2"
+    },
+    {
+     "provider": "DEMO FIXTURE",
+     "kind": "micro:FWRY.EGX",
+     "status": "fixture:2"
+    },
+    {
+     "provider": "DEMO FIXTURE",
+     "kind": "micro:ADIB.EGX",
+     "status": "fixture:2"
+    },
+    {
+     "provider": "DEMO FIXTURE",
+     "kind": "micro:EFIH.EGX",
+     "status": "fixture:2"
+    },
+    {
+     "provider": "DEMO FIXTURE",
+     "kind": "macro",
+     "status": "fixture:4"
+    }
+   ],
+   "aggregation": {
+    "rule": "Equal-weight arithmetic mean of per-headline class probabilities.",
+    "label_rule": "Bullish if positive is the strict maximum; Bearish if negative is the strict maximum; otherwise Neutral.",
+    "score_rule": "mean(positive) - mean(negative)",
+    "status": "Reconstruction choice; the article does not publish the aggregation formula."
+   },
+   "inference": {
+    "model": "ProsusAI/finbert",
+    "provider": "fixture vectors (no model call)",
+    "parameters": {
+     "top_k": 3,
+     "function_to_apply": "softmax"
+    },
+    "request_mode": "fixture lookup; no HTTP request"
+   },
+   "warnings": [
+    "Fixture data only. Titles and probability vectors below are illustrative and were not fetched from news providers or inferred by FinBERT."
+   ],
+   "headlines": [
+    {
+     "title": "[FIXTURE] Commercial International Bank reports higher quarterly earnings",
+     "symbol": "COMI.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.78,
+      "negative": 0.08,
+      "neutral": 0.14
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] CIB expands financing options for Egyptian small businesses",
+     "symbol": "COMI.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.66,
+      "negative": 0.12,
+      "neutral": 0.22
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] Telecom Egypt announces network investment across local markets",
+     "symbol": "ETEL.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.72,
+      "negative": 0.09,
+      "neutral": 0.19
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] Telecom Egypt reports growth in broadband subscriptions",
+     "symbol": "ETEL.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.73,
+      "negative": 0.07,
+      "neutral": 0.2
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] Fawry reports stronger digital payment volumes in Egypt",
+     "symbol": "FWRY.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.83,
+      "negative": 0.05,
+      "neutral": 0.12
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] Fawry expands merchant services in a company update",
+     "symbol": "FWRY.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.69,
+      "negative": 0.08,
+      "neutral": 0.23
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] Abu Dhabi Islamic Bank Egypt reports a sample increase in deposits",
+     "symbol": "ADIB.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.68,
+      "negative": 0.1,
+      "neutral": 0.22
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] ADIB Egypt reviews lending conditions in an illustrative update",
+     "symbol": "ADIB.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.17,
+      "negative": 0.31,
+      "neutral": 0.52
+     },
+     "predicted_label": "Neutral"
+    },
+    {
+     "title": "[FIXTURE] E-finance reports a sample expansion in digital transactions",
+     "symbol": "EFIH.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.74,
+      "negative": 0.06,
+      "neutral": 0.2
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] E-finance reviews investment needs in a company update",
+     "symbol": "EFIH.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.24,
+      "negative": 0.25,
+      "neutral": 0.51
+     },
+     "predicted_label": "Neutral"
+    },
+    {
+     "title": "[FIXTURE] Egypt's inflation measure eases in an illustrative macro update",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.62,
+      "negative": 0.08,
+      "neutral": 0.3
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] Egypt's central bank keeps its policy rate unchanged in a sample scenario",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.18,
+      "negative": 0.21,
+      "neutral": 0.61
+     },
+     "predicted_label": "Neutral"
+    },
+    {
+     "title": "[FIXTURE] Egyptian firms face currency volatility in a sample headline",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.11,
+      "negative": 0.69,
+      "neutral": 0.2
+     },
+     "predicted_label": "Negative"
+    },
+    {
+     "title": "[FIXTURE] Egypt outlines fiscal measures intended to support growth",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.71,
+      "negative": 0.06,
+      "neutral": 0.23
+     },
+     "predicted_label": "Positive"
+    }
+   ]
+  }
+ },
+ "12 8011 /api/sentiment/portfolio": {
+  "body": {
+   "symbols": [
+    "COMI",
+    "ETEL",
+    "FWRY",
+    "ADIB",
+    "EFIH"
+   ]
+  },
+  "http": 200,
+  "response": {
+   "analysis_status": "completed",
+   "data_mode": "fixture",
+   "scope": "portfolio",
+   "symbols": [
+    "COMI.EGX",
+    "ETEL.EGX",
+    "FWRY.EGX",
+    "ADIB.EGX",
+    "EFIH.EGX"
+   ],
+   "sentiment": "Bullish",
+   "probabilities": {
+    "positive": 0.5614285714285715,
+    "negative": 0.16071428571428573,
+    "neutral": 0.27785714285714286
+   },
+   "score": 0.4007142857142858,
+   "news_count": 14,
+   "inference_item_count": 0,
+   "inference_http_requests": 0,
+   "providers": [
+    {
+     "provider": "DEMO FIXTURE",
+     "kind": "micro:COMI.EGX",
+     "status": "fixture:2"
+    },
+    {
+     "provider": "DEMO FIXTURE",
+     "kind": "micro:ETEL.EGX",
+     "status": "fixture:2"
+    },
+    {
+     "provider": "DEMO FIXTURE",
+     "kind": "micro:FWRY.EGX",
+     "status": "fixture:2"
+    },
+    {
+     "provider": "DEMO FIXTURE",
+     "kind": "micro:ADIB.EGX",
+     "status": "fixture:2"
+    },
+    {
+     "provider": "DEMO FIXTURE",
+     "kind": "micro:EFIH.EGX",
+     "status": "fixture:2"
+    },
+    {
+     "provider": "DEMO FIXTURE",
+     "kind": "macro",
+     "status": "fixture:4"
+    }
+   ],
+   "aggregation": {
+    "rule": "Equal-weight arithmetic mean of per-headline class probabilities.",
+    "label_rule": "Bullish if positive is the strict maximum; Bearish if negative is the strict maximum; otherwise Neutral.",
+    "score_rule": "mean(positive) - mean(negative)",
+    "status": "Reconstruction choice; the article does not publish the aggregation formula."
+   },
+   "inference": {
+    "model": "ProsusAI/finbert",
+    "provider": "fixture vectors (no model call)",
+    "parameters": {
+     "top_k": 3,
+     "function_to_apply": "softmax"
+    },
+    "request_mode": "fixture lookup; no HTTP request"
+   },
+   "warnings": [
+    "Fixture data only. Titles and probability vectors below are illustrative and were not fetched from news providers or inferred by FinBERT."
+   ],
+   "headlines": [
+    {
+     "title": "[FIXTURE] Commercial International Bank reports higher quarterly earnings",
+     "symbol": "COMI.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.78,
+      "negative": 0.08,
+      "neutral": 0.14
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] CIB expands financing options for Egyptian small businesses",
+     "symbol": "COMI.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.66,
+      "negative": 0.12,
+      "neutral": 0.22
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] Telecom Egypt announces network investment across local markets",
+     "symbol": "ETEL.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.72,
+      "negative": 0.09,
+      "neutral": 0.19
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] Telecom Egypt reports growth in broadband subscriptions",
+     "symbol": "ETEL.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.73,
+      "negative": 0.07,
+      "neutral": 0.2
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] Fawry reports stronger digital payment volumes in Egypt",
+     "symbol": "FWRY.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.83,
+      "negative": 0.05,
+      "neutral": 0.12
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] Fawry expands merchant services in a company update",
+     "symbol": "FWRY.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.69,
+      "negative": 0.08,
+      "neutral": 0.23
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] Abu Dhabi Islamic Bank Egypt reports a sample increase in deposits",
+     "symbol": "ADIB.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.68,
+      "negative": 0.1,
+      "neutral": 0.22
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] ADIB Egypt reviews lending conditions in an illustrative update",
+     "symbol": "ADIB.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.17,
+      "negative": 0.31,
+      "neutral": 0.52
+     },
+     "predicted_label": "Neutral"
+    },
+    {
+     "title": "[FIXTURE] E-finance reports a sample expansion in digital transactions",
+     "symbol": "EFIH.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.74,
+      "negative": 0.06,
+      "neutral": 0.2
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] E-finance reviews investment needs in a company update",
+     "symbol": "EFIH.EGX",
+     "kind": "micro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.24,
+      "negative": 0.25,
+      "neutral": 0.51
+     },
+     "predicted_label": "Neutral"
+    },
+    {
+     "title": "[FIXTURE] Egypt's inflation measure eases in an illustrative macro update",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.62,
+      "negative": 0.08,
+      "neutral": 0.3
+     },
+     "predicted_label": "Positive"
+    },
+    {
+     "title": "[FIXTURE] Egypt's central bank keeps its policy rate unchanged in a sample scenario",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.18,
+      "negative": 0.21,
+      "neutral": 0.61
+     },
+     "predicted_label": "Neutral"
+    },
+    {
+     "title": "[FIXTURE] Egyptian firms face currency volatility in a sample headline",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.11,
+      "negative": 0.69,
+      "neutral": 0.2
+     },
+     "predicted_label": "Negative"
+    },
+    {
+     "title": "[FIXTURE] Egypt outlines fiscal measures intended to support growth",
+     "symbol": null,
+     "kind": "macro",
+     "source": "DEMO FIXTURE",
+     "published_at": null,
+     "probabilities": {
+      "positive": 0.71,
+      "negative": 0.06,
+      "neutral": 0.23
+     },
+     "predicted_label": "Positive"
+    }
+   ]
+  }
+ },
+ "13 8010 /api/sentiment/portfolio": {
+  "body": {
+   "symbols": [
+    "COMI",
+    "ETEL",
+    "FWRY",
+    "ADIB",
+    "EFIH",
+    "HRHO"
+   ]
+  },
+  "http": 422,
+  "response": {
+   "error": {
+    "code": "invalid_request",
+    "message": "Dữ liệu request không hợp lệ.",
+    "details": [
+     {
+      "type": "too_long",
+      "loc": [
+       "body",
+       "symbols"
+      ],
+      "msg": "List should have at most 5 items after validation, not 6",
+      "input": [
+       "COMI",
+       "ETEL",
+       "FWRY",
+       "ADIB",
+       "EFIH",
+       "HRHO"
+      ],
+      "ctx": {
+       "field_type": "List",
+       "max_length": 5,
+       "actual_length": 6
+      }
+     }
+    ]
+   }
+  }
+ },
+ "14 8010 /api/v2/sentiment/portfolio/weighted": {
+  "body": {
+   "positions": [
+    {
+     "symbol": "COMI",
+     "weight": 70,
+     "macro_beta": 1.2
+    },
+    {
+     "symbol": "ETEL",
+     "weight": 20,
+     "macro_beta": 0.6
+    },
+    {
+     "symbol": "FWRY",
+     "weight": 10,
+     "macro_beta": 1.0
+    }
+   ]
+  },
+  "http": 200,
+  "response": {
+   "analysis_status": "completed",
+   "data_mode": "fixture",
+   "scope": "weighted_portfolio",
+   "symbols": [
+    "COMI.EGX",
+    "ETEL.EGX",
+    "FWRY.EGX"
+   ],
+   "article_method": {
+    "method": "article_equal_weight_mean",
+    "score": 0.44999999999999996,
+    "sentiment": "Bullish",
+    "probabilities": {
+     "positive": 0.603,
+     "negative": 0.153,
+     "neutral": 0.244
+    },
+    "headline_count": 10
+   },
+   "upgraded_method": {
+    "method": "time_confidence_portfolio_weighted",
+    "score": 0.19268394647352455,
+    "sentiment": "Insufficient",
+    "score_label": "Bullish",
+    "evidence_status": "insufficient",
+    "evidence_threshold": 0.5,
+    "evidence_by_group": {
+     "COMI.EGX": 0.07750000000000001,
+     "ETEL.EGX": 0.080625,
+     "FWRY.EGX": 0.086875,
+     "macro": 0.44999999999999996
+    },
+    "neutral_band": 0.15,
+    "macro": {
+     "score": 0.09915789473684208,
+     "weighted_mean_score": 0.20933333333333332,
+     "evidence": 0.44999999999999996,
+     "shrink_factor": 0.47368421052631576,
+     "effective_count": 3.081605478409739,
+     "count": 4,
+     "prior_strength": 0.5,
+     "weighted_probabilities": {
+      "positive": 0.48083333333333333,
+      "negative": 0.27149999999999996,
+      "neutral": 0.24766666666666667
+     }
+    },
+    "portfolio_beta": 1.06,
+    "micro_part": 0.08757657805247195,
+    "macro_part": 0.10510736842105262,
+    "holdings": [
+     {
+      "symbol": "COMI.EGX",
+      "capital_weight": 0.7,
+      "macro_beta": 1.2,
+      "micro": {
+       "score": 0.08458874458874459,
+       "weighted_mean_score": 0.6303225806451612,
+       "evidence": 0.07750000000000001,
+       "shrink_factor": 0.1341991341991342,
+       "effective_count": 1.967246673490277,
+       "count": 2,
+       "prior_strength": 0.5,
+       "weighted_probabilities": {
+        "positive": 0.7277419354838709,
+        "negative": 0.09741935483870967,
+        "neutral": 0.17483870967741935
+       }
+      },
+      "macro_component": 0.11898947368421049,
+      "unclipped_score": 0.20357821827295508,
+      "stock_score": 0.20357821827295508,
+      "clip_factor": 1.0,
+      "contribution": 0.14250475279106856,
+      "has_micro_news": true
+     },
+     {
+      "symbol": "ETEL.EGX",
+      "capital_weight": 0.2,
+      "macro_beta": 0.6,
+      "micro": {
+       "score": 0.08961248654467169,
+       "weighted_mean_score": 0.6453488372093023,
+       "evidence": 0.080625,
+       "shrink_factor": 0.1388589881593111,
+       "effective_count": 1.9989189189189194,
+       "count": 2,
+       "prior_strength": 0.5,
+       "weighted_probabilities": {
+        "positive": 0.7251162790697674,
+        "negative": 0.07976744186046511,
+        "neutral": 0.19511627906976742
+       }
+      },
+      "macro_component": 0.059494736842105246,
+      "unclipped_score": 0.14910722338677693,
+      "stock_score": 0.14910722338677693,
+      "clip_factor": 1.0,
+      "contribution": 0.029821444677355386,
+      "has_micro_news": true
+     },
+     {
+      "symbol": "FWRY.EGX",
+      "capital_weight": 0.1,
+      "macro_beta": 1.0,
+      "micro": {
+       "score": 0.10441959531416398,
+       "weighted_mean_score": 0.7053956834532373,
+       "evidence": 0.086875,
+       "shrink_factor": 0.14802981895633652,
+       "effective_count": 1.9705252422233555,
+       "count": 2,
+       "prior_strength": 0.5,
+       "weighted_probabilities": {
+        "positive": 0.7685611510791366,
+        "negative": 0.0631654676258993,
+        "neutral": 0.16827338129496403
+       }
+      },
+      "macro_component": 0.09915789473684208,
+      "unclipped_score": 0.20357749005100606,
+      "stock_score": 0.20357749005100606,
+      "clip_factor": 1.0,
+      "contribution": 0.02035774900510061,
+      "has_micro_news": true
+     }
+    ],
+    "headlines": [
+     {
+      "title": "[FIXTURE] Commercial International Bank reports higher quarterly earnings",
+      "kind": "micro",
+      "symbol": "COMI.EGX",
+      "source": "DEMO FIXTURE",
+      "published_at": null,
+      "age_hours": 48.0,
+      "age_is_assumed": true,
+      "half_life_hours": 12.0,
+      "probabilities": {
+       "positive": 0.78,
+       "negative": 0.08,
+       "neutral": 0.14
+      },
+      "score": 0.7000000000000001,
+      "time_weight": 0.0625,
+      "confidence_weight": 0.7000000000000001,
+      "weight": 0.043750000000000004,
+      "capital_weight": 0.7,
+      "macro_beta_applied": null,
+      "contribution": 0.037121212121212124,
+      "article_contribution": 0.07
+     },
+     {
+      "title": "[FIXTURE] CIB expands financing options for Egyptian small businesses",
+      "kind": "micro",
+      "symbol": "COMI.EGX",
+      "source": "DEMO FIXTURE",
+      "published_at": null,
+      "age_hours": 48.0,
+      "age_is_assumed": true,
+      "half_life_hours": 12.0,
+      "probabilities": {
+       "positive": 0.66,
+       "negative": 0.12,
+       "neutral": 0.22
+      },
+      "score": 0.54,
+      "time_weight": 0.0625,
+      "confidence_weight": 0.54,
+      "weight": 0.03375,
+      "capital_weight": 0.7,
+      "macro_beta_applied": null,
+      "contribution": 0.02209090909090909,
+      "article_contribution": 0.054000000000000006
+     },
+     {
+      "title": "[FIXTURE] Telecom Egypt announces network investment across local markets",
+      "kind": "micro",
+      "symbol": "ETEL.EGX",
+      "source": "DEMO FIXTURE",
+      "published_at": null,
+      "age_hours": 48.0,
+      "age_is_assumed": true,
+      "half_life_hours": 12.0,
+      "probabilities": {
+       "positive": 0.72,
+       "negative": 0.09,
+       "neutral": 0.19
+      },
+      "score": 0.63,
+      "time_weight": 0.0625,
+      "confidence_weight": 0.63,
+      "weight": 0.039375,
+      "capital_weight": 0.2,
+      "macro_beta_applied": null,
+      "contribution": 0.008544671689989238,
+      "article_contribution": 0.063
+     },
+     {
+      "title": "[FIXTURE] Telecom Egypt reports growth in broadband subscriptions",
+      "kind": "micro",
+      "symbol": "ETEL.EGX",
+      "source": "DEMO FIXTURE",
+      "published_at": null,
+      "age_hours": 48.0,
+      "age_is_assumed": true,
+      "half_life_hours": 12.0,
+      "probabilities": {
+       "positive": 0.73,
+       "negative": 0.07,
+       "neutral": 0.2
+      },
+      "score": 0.6599999999999999,
+      "time_weight": 0.0625,
+      "confidence_weight": 0.6599999999999999,
+      "weight": 0.041249999999999995,
+      "capital_weight": 0.2,
+      "macro_beta_applied": null,
+      "contribution": 0.009377825618945101,
+      "article_contribution": 0.06599999999999999
+     },
+     {
+      "title": "[FIXTURE] Fawry reports stronger digital payment volumes in Egypt",
+      "kind": "micro",
+      "symbol": "FWRY.EGX",
+      "source": "DEMO FIXTURE",
+      "published_at": null,
+      "age_hours": 48.0,
+      "age_is_assumed": true,
+      "half_life_hours": 12.0,
+      "probabilities": {
+       "positive": 0.83,
+       "negative": 0.05,
+       "neutral": 0.12
+      },
+      "score": 0.7799999999999999,
+      "time_weight": 0.0625,
+      "confidence_weight": 0.7799999999999999,
+      "weight": 0.048749999999999995,
+      "capital_weight": 0.1,
+      "macro_beta_applied": null,
+      "contribution": 0.006479233226837059,
+      "article_contribution": 0.07799999999999999
+     },
+     {
+      "title": "[FIXTURE] Fawry expands merchant services in a company update",
+      "kind": "micro",
+      "symbol": "FWRY.EGX",
+      "source": "DEMO FIXTURE",
+      "published_at": null,
+      "age_hours": 48.0,
+      "age_is_assumed": true,
+      "half_life_hours": 12.0,
+      "probabilities": {
+       "positive": 0.69,
+       "negative": 0.08,
+       "neutral": 0.23
+      },
+      "score": 0.61,
+      "time_weight": 0.0625,
+      "confidence_weight": 0.61,
+      "weight": 0.038125,
+      "capital_weight": 0.1,
+      "macro_beta_applied": null,
+      "contribution": 0.00396272630457934,
+      "article_contribution": 0.061
+     },
+     {
+      "title": "[FIXTURE] Egypt's inflation measure eases in an illustrative macro update",
+      "kind": "macro",
+      "symbol": null,
+      "source": "DEMO FIXTURE",
+      "published_at": null,
+      "age_hours": 48.0,
+      "age_is_assumed": true,
+      "half_life_hours": 24.0,
+      "probabilities": {
+       "positive": 0.62,
+       "negative": 0.08,
+       "neutral": 0.3
+      },
+      "score": 0.54,
+      "time_weight": 0.25,
+      "confidence_weight": 0.54,
+      "weight": 0.135,
+      "capital_weight": null,
+      "macro_beta_applied": 1.06,
+      "contribution": 0.08134105263157897,
+      "article_contribution": 0.054000000000000006
+     },
+     {
+      "title": "[FIXTURE] Egypt's central bank keeps its policy rate unchanged in a sample scenario",
+      "kind": "macro",
+      "symbol": null,
+      "source": "DEMO FIXTURE",
+      "published_at": null,
+      "age_hours": 48.0,
+      "age_is_assumed": true,
+      "half_life_hours": 24.0,
+      "probabilities": {
+       "positive": 0.18,
+       "negative": 0.21,
+       "neutral": 0.61
+      },
+      "score": -0.03,
+      "time_weight": 0.25,
+      "confidence_weight": 0.03,
+      "weight": 0.0075,
+      "capital_weight": null,
+      "macro_beta_applied": 1.06,
+      "contribution": -0.0002510526315789474,
+      "article_contribution": -0.003
+     },
+     {
+      "title": "[FIXTURE] Egyptian firms face currency volatility in a sample headline",
+      "kind": "macro",
+      "symbol": null,
+      "source": "DEMO FIXTURE",
+      "published_at": null,
+      "age_hours": 48.0,
+      "age_is_assumed": true,
+      "half_life_hours": 24.0,
+      "probabilities": {
+       "positive": 0.11,
+       "negative": 0.69,
+       "neutral": 0.2
+      },
+      "score": -0.58,
+      "time_weight": 0.25,
+      "confidence_weight": 0.58,
+      "weight": 0.145,
+      "capital_weight": null,
+      "macro_beta_applied": 1.06,
+      "contribution": -0.09383789473684212,
+      "article_contribution": -0.057999999999999996
+     },
+     {
+      "title": "[FIXTURE] Egypt outlines fiscal measures intended to support growth",
+      "kind": "macro",
+      "symbol": null,
+      "source": "DEMO FIXTURE",
+      "published_at": null,
+      "age_hours": 48.0,
+      "age_is_assumed": true,
+      "half_life_hours": 24.0,
+      "probabilities": {
+       "positive": 0.71,
+       "negative": 0.06,
+       "neutral": 0.23
+      },
+      "score": 0.6499999999999999,
+      "time_weight": 0.25,
+      "confidence_weight": 0.6499999999999999,
+      "weight": 0.16249999999999998,
+      "capital_weight": null,
+      "macro_beta_applied": 1.06,
+      "contribution": 0.11785526315789471,
+      "article_contribution": 0.06499999999999999
+     }
+    ],
+    "warnings": [
+     "Không tiêu đề nào có ngày đăng; tuổi tin được giả định, Time-Decay kém tin cậy.",
+     "Không đủ tin: không nhóm tin nào có tổng trọng số Σw ≥ 0.5 (mạnh nhất là tin vĩ mô, Σw = 0.450). Điểm +0.193 (Bullish) chỉ để tham khảo, không nên coi là tín hiệu."
+    ],
+    "parameters": {
+     "half_life_hours": {
+      "micro": 12.0,
+      "macro": 24.0
+     },
+     "prior_strength": 0.5,
+     "missing_age_hours": 48.0,
+     "neutral_band": 0.15,
+     "evidence_threshold": 0.5,
+     "positions": [
+      {
+       "symbol": "COMI.EGX",
+       "capital_weight": 0.7,
+       "macro_beta": 1.2
+      },
+      {
+       "symbol": "ETEL.EGX",
+       "capital_weight": 0.2,
+       "macro_beta": 0.6
+      },
+      {
+       "symbol": "FWRY.EGX",
+       "capital_weight": 0.1,
+       "macro_beta": 1.0
+      }
+     ],
+     "now_utc": "2026-11-03T06:47:29.954262+00:00"
+    }
+   },
+   "difference": -0.2573160535264754,
+   "providers": [
+    {
+     "provider": "DEMO FIXTURE",
+     "kind": "micro:COMI.EGX",
+     "status": "fixture:2"
+    },
+    {
+     "provider": "DEMO FIXTURE",
+     "kind": "micro:ETEL.EGX",
+     "status": "fixture:2"
+    },
+    {
+     "provider": "DEMO FIXTURE",
+     "kind": "micro:FWRY.EGX",
+     "status": "fixture:2"
+    },
+    {
+     "provider": "DEMO FIXTURE",
+     "kind": "macro",
+     "status": "fixture:4"
+    }
+   ],
+   "timing_ms": {
+    "news": 0.0,
+    "inference": 0.0,
+    "total": 0.5712999845854938
+   },
+   "data_freshness": null,
+   "cache": {
+    "news_cache_hits_this_request": 0,
+    "inference_this_request": {
+     "requested": 10,
+     "cache_hits": 0,
+     "model_calls": 0,
+     "mode": "fixture"
+    },
+    "inference_cache": {
+     "ttl_seconds": 86400.0,
+     "max_items": 8192,
+     "size": 0,
+     "hits": 0,
+     "misses": 0,
+     "expired": 0,
+     "evictions": 0,
+     "hit_rate": 0.0
+    },
+    "news_cache": {
+     "ttl_seconds": 600.0,
+     "max_items": 512,
+     "size": 0,
+     "hits": 0,
+     "misses": 0,
+     "expired": 0,
+     "evictions": 0,
+     "hit_rate": 0.0
+    },
+    "model_calls_total": 0
+   }
+  }
+ },
+ "15 8010 /api/v2/cache/stats": {
+  "body": null,
+  "http": 200,
+  "response": {
+   "inference_cache": {
+    "ttl_seconds": 86400.0,
+    "max_items": 8192,
+    "size": 0,
+    "hits": 0,
+    "misses": 0,
+    "expired": 0,
+    "evictions": 0,
+    "hit_rate": 0.0
+   },
+   "news_cache": {
+    "ttl_seconds": 600.0,
+    "max_items": 512,
+    "size": 0,
+    "hits": 0,
+    "misses": 0,
+    "expired": 0,
+    "evictions": 0,
+    "hit_rate": 0.0
+   },
+   "model_calls_total": 0
+  }
+ },
+ "16 8011 /api/sentiment/stock?symbol=COMI": {
+  "body": null,
+  "http": 405,
+  "response": {
+   "detail": "Method Not Allowed"
+  }
+ },
+ "17 8010 /api/sentiment/stock": {
+  "body": {
+   "symbol": "COMI.NYSE"
+  },
+  "http": 422,
+  "response": {
+   "error": {
+    "code": "invalid_request",
+    "message": "Chỉ nhập mã cổ phiếu EGX, ví dụ COMI hoặc COMI.EGX.",
+    "details": [
+     {
+      "type": "value_error",
+      "loc": [
+       "body",
+       "symbol"
+      ],
+      "msg": "Value error, Chỉ nhập mã cổ phiếu EGX, ví dụ COMI hoặc COMI.EGX.",
+      "input": "COMI.NYSE",
+      "ctx": {
+       "error": "Chỉ nhập mã cổ phiếu EGX, ví dụ COMI hoặc COMI.EGX."
+      }
+     }
+    ]
+   }
+  }
+ },
+ "18 8011 /api/sentiment/stock": {
+  "body": {
+   "symbol": "COMI.NYSE"
+  },
+  "http": 500,
+  "response": "Internal Server Error"
+ }
+}

@@ -1,0 +1,9 @@
+fastapi>=0.115,<1
+uvicorn>=0.30,<1
+httpx>=0.27,<1
+feedparser>=6.0.11,<7
+torch>=2.5,<3
+transformers>=4.44,<6
+# [Nâng cấp] vẽ biểu đồ PNG cho scripts/run_upgrade_demo.py
+matplotlib>=3.8,<4
+yfinance==1.8.0

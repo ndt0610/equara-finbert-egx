@@ -1,0 +1,37 @@
+{
+  "notice": "Fixture only. Extra candidates used by the upgrade tab to show rejected headlines and their reasons. Not fetched from any news source and never scored by FinBERT.",
+  "items": [
+    {
+      "symbol": "COMI.EGX",
+      "title": "[FIXTURE] COMMERCIAL INTERNATIONAL BANK EGYPT Equity Price and Quote",
+      "description": null,
+      "url": null,
+      "published_at": null,
+      "source": "DEMO FIXTURE"
+    },
+    {
+      "symbol": "COMI.EGX",
+      "title": "[FIXTURE] Egypt prepares for coming debt repayments",
+      "description": "Egypt EGX market update",
+      "url": null,
+      "published_at": null,
+      "source": "DEMO FIXTURE"
+    },
+    {
+      "symbol": "ETEL.EGX",
+      "title": "[FIXTURE] Telecom Egypt SC held to a draw in the Egyptian Premier League",
+      "description": null,
+      "url": null,
+      "published_at": null,
+      "source": "DEMO FIXTURE"
+    },
+    {
+      "symbol": "FWRY.EGX",
+      "title": "[FIXTURE] Egypt's digital payments market keeps growing",
+      "description": "Fawry and other providers report more users",
+      "url": null,
+      "published_at": null,
+      "source": "DEMO FIXTURE"
+    }
+  ]
+}

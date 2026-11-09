@@ -1,0 +1,12 @@
+{
+  "status": "ok",
+  "app_version": "0.2.0",
+  "data_mode": "live",
+  "model": "ProsusAI/finbert",
+  "inference_provider": "hf-inference",
+  "inference_revision": null,
+  "inference_device": null,
+  "hf_token_configured": false,
+  "eodhd_token_configured": false,
+  "inference_request_mode": "up to 15 headlines per HTTP request, fallback one per request; server: self-hosted (HF API format)"
+}

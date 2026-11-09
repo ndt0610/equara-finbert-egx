@@ -1,0 +1,26 @@
+from pathlib import Path
+import json,re
+r=Path(__file__).resolve().parents[1]
+p=r/'notebooks/Equara_AI_FinBERT_Colab.ipynb';n=json.loads(p.read_text(encoding='utf-8'))
+for c in n['cells']:
+    s=''.join(c.get('source',[]))
+    s=re.sub(r'    if p\["bound"\]:\n        print\([^\n]+\)\n','',s)
+    s=s.replace('    print(p["bound_is_not"])','    print(p["scope_note"])')
+    s=s.replace('Độ phủ tin:', 'Vốn được đại diện:')
+    s=re.sub(r'^- \*\*Khoảng giới hạn\*\*.*$', '- Chỉ phân tích các tin đã chấm; mã chưa có dữ liệu không được gán điểm thay thế.',s,flags=re.M)
+    c['source']=s.splitlines(keepends=True)
+p.write_text(json.dumps(n,ensure_ascii=False,indent=1)+'\n',encoding='utf-8')
+p=r/'tests/test_notebook.py';s=p.read_text(encoding='utf-8').replace('Độ phủ tin: 80% vốn','Vốn được đại diện: 80% vốn')
+s=re.sub(r'    assert re.search\(r"Khoảng giới hạn[^\n]+\n','    assert "Khoảng giới hạn" not in printed and "Chỉ tổng hợp tin đã chấm" in printed\n',s)
+p.write_text(s,encoding='utf-8')
+p=r/'scripts/replay_saved_runs.py';s=p.read_text(encoding='utf-8')
+s=re.sub(r'^    bound_text = .*\n','',s,flags=re.M)
+s=re.sub(r'^        f"- Khoảng giới hạn.*\n','        "- Chỉ tổng hợp trên tin đã chấm; không suy diễn điểm cho mã chưa có dữ liệu.",\n',s,flags=re.M)
+s=s.replace('đóng góp, khoảng giới hạn','đóng góp từ tin đã chấm')
+p.write_text(s,encoding='utf-8')
+p=r/'scripts/summarize_captures.py';s=p.read_text(encoding='utf-8')
+s=s.replace('và đếm số lượt có C > 50%: đó là điều kiện toán học để khoảng giới hạn có thể nằm hẳn về một phía của 0.','Phạm vi vốn được thống kê để mô tả dữ liệu đã thu, không suy diễn tin chưa có.')
+s=re.sub(r'^                f"- Số lượt có độ phủ trên 50%.*\n','',s,flags=re.M)
+p.write_text(s,encoding='utf-8')
+p=r/'backend/app.py';s=p.read_text(encoding='utf-8').replace('độ phủ tin theo vốn, đóng góp từng mã, khoảng giới hạn,','điểm tin đã chấm theo vốn, đóng góp từng mã, phạm vi dữ liệu,');p.write_text(s,encoding='utf-8')
+print('Notebook and replay now use observed-only contract')
