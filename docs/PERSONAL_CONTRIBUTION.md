@@ -1,20 +1,20 @@
-# Đóng góp cá nhân trong dự án
+# Đóng góp cá nhân trong Equara
 
-Chủ dự án xác định nhu cầu cho người đang nắm cổ phiếu, đề xuất hai hướng nâng cấp gồm phản ánh phân bổ vốn và đối chiếu tin với diễn biến giá. Chủ dự án phản biện qua demo, yêu cầu dùng cùng tin khi so sánh, phát hiện sự khác biệt giữa vốn nhập với tỷ trọng tin, yêu cầu công thức và lý do phân loại có thể giải thích trước người xem.
+Equara là dự án cá nhân của Nguyễn Đình Tú, phát triển từ bài tập/ý tưởng phân tích tin tài chính EGX và mở rộng thành các luồng nghiên cứu riêng.
 
-## Sản phẩm kỹ thuật trong phạm vi nâng cấp
+## Phạm vi cá nhân
 
-1. Luồng danh mục dùng lại lô tin gốc, bảo toàn điểm khi chia vốn đều, hỗ trợ thay vốn và truy nguyên đóng góp từng tin.
-2. Luồng Tin + Giá riêng, thu thập ứng viên, xác định doanh nghiệp, theo dõi thời gian, gom gần trùng và giảm trọng số tuổi tin.
-3. Quy tắc năm nhãn với công thức, điều kiện, dữ liệu và nguyên nhân tạo nhãn được hiển thị.
-4. Giao diện so sánh, tài liệu giải thích và bộ kiểm thử cho các hành vi đã triển khai.
+- Xác định người dùng mục tiêu của luồng Tin + Giá là người đang nắm giữ cổ phiếu; đề xuất cách đưa điểm tin, tuổi tin và mức biến động 5 phiên vào một bảng quy tắc có thể giải thích.
+- Đề ra yêu cầu cho luồng danh mục theo vốn: dùng cùng lô tin khi so sánh, thể hiện độ phủ và đóng góp theo từng mã, không để người xem nhầm trọng số tin với tỷ trọng vốn.
+- Rà demo và phản biện trường hợp tin với giá trái chiều, thiếu dữ liệu, tin cũ/trùng, ngưỡng biến động và lý do tạo nhãn.
+- Mở rộng phạm vi nghiên cứu sang danh mục Mỹ Phase 1 và các nhánh sổ cái/replay; các giai đoạn có trạng thái và giới hạn riêng trong tài liệu.
 
-## Cách ghi nhận tác giả
+## Cách triển khai và ghi nhận công cụ
 
-Phần xác định bài toán, yêu cầu, phản biện và quyết định phạm vi thuộc đóng góp của chủ dự án. Việc đề xuất chi tiết thuật toán, viết mã, tài liệu và kiểm thử có hỗ trợ đáng kể từ Codex và Claude. Người trình bày cần nêu đúng mức tham gia thực tế và hiểu các quyết định đang bảo vệ. Repository chưa xác định phân công từng thành viên theo từng commit, vì mã được đóng gói từ phiên làm việc cộng tác.
+Tôi sử dụng công cụ AI (bao gồm Codex và Claude) để hỗ trợ đề xuất, viết/sửa mã, tài liệu và kiểm thử. Vai trò của tôi là xác định bài toán/phạm vi, đưa yêu cầu, rà giao diện và kết quả, phản biện lựa chọn phương pháp, kiểm tra các ví dụ và quyết định nội dung đưa vào demo. Không nên mô tả dự án là sản phẩm nhóm; cũng không nên nói toàn bộ mã do tôi tự viết thủ công.
 
-FinBERT là mô hình kế thừa của ProsusAI. Phép trung bình trọng số, suy giảm mũ và phân vị là kỹ thuật có sẵn. Đóng góp của đồ án nằm ở việc lựa chọn, tích hợp và giải thích chúng cho trường hợp sử dụng, cùng phản biện giới hạn qua demo.
+FinBERT là mô hình pretrained của ProsusAI. Công thức giảm trọng số theo tuổi, phân vị lịch sử và cách gom chuỗi tiêu đề là các kỹ thuật có sẵn; đóng góp ở đây là lựa chọn, tích hợp và trình bày chúng cho bài toán demo này, không phải phát minh mô hình mới.
 
-## Vấn đề còn mở
+## Giới hạn cần nói cùng kết quả
 
-Danh mục hiện giữ nguyên trung bình từng bài của gốc nên số bài và vĩ mô vẫn ảnh hưởng điểm. Kết quả chưa phản ánh vốn thuần theo từng mã khi thiếu tin. Tin + Giá dùng các ngưỡng thử nghiệm và chưa được đánh giá lợi nhuận ngoài mẫu. Những hạn chế này là phần cần trình bày cùng kết quả.
+Bộ quy tắc Tin + Giá hiện là thử nghiệm, chưa được kiểm định lợi nhuận ngoài mẫu. Nhóm tiêu đề gần trùng là phép ghép tạm; dữ liệu giá ngày chưa được đối soát độc lập mọi sự kiện doanh nghiệp. Phản ứng sau tin mô tả quan sát theo thời gian, không chứng minh quan hệ nhân quả. Các nhánh danh mục Mỹ, replay và annotation có chất lượng dữ liệu/trạng thái khác nhau; xem tài liệu Phase tương ứng trước khi trích dẫn số liệu.

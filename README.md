@@ -1,148 +1,82 @@
-# Equara — danh mục Mỹ (Phase 1) và bản nghiên cứu EGX
+# Equara — FinBERT, tin–giá và danh mục đầu tư
 
-## Danh mục Mỹ — Phase 1
+**Dự án cá nhân về phân tích dữ liệu tài chính:** từ chấm sắc thái tin, theo dõi bằng chứng theo từng nhóm tin, đến thử nghiệm quy tắc gán nhãn theo tin và giá. Repository còn có một nhánh riêng cho danh mục cổ phiếu Mỹ (Phase 1).
 
-Trang mặc định có tab **Danh mục Mỹ · Phase 1**. Tab này nhận số lượng cổ phiếu,
-giá tham chiếu người dùng nhập, tiền mặt và thay đổi giá giả định; API tính vốn có
-tin, sắc thái trên phần vốn có tin, từng đóng góp và kịch bản giá. Đối chiếu công
-thức EGX cũ nằm trong phần mở rộng ở cuối kết quả.
+> **Điểm cần xem đầu tiên:** luồng **Tin + Giá** cho EGX. Đây là phần biến điểm sắc thái và biến động giá thành một trong năm nhãn có giải thích; nhãn là quy tắc nghiên cứu thử nghiệm, không phải khuyến nghị đầu tư.
 
-Chế độ **fixture** dùng dữ liệu giả lập. Tiêu đề, xác suất và ngày tin trong
-`fixtures/us_portfolio_phase1.json` được viết để kiểm tra phần mềm, không do
-FinBERT chấm hoặc được lấy từ nhà cung cấp. Giá trong chế độ fixture cũng do
-người dùng nhập như giả định. Chế độ **sổ cái cục bộ** đọc dữ liệu SEC, Alpaca
-và giá SIP đã thu thập trên máy; mẻ đầu là hồi cứu. PiT nghiêm ngặt chỉ dùng
-bản ghi Equara đã nhận trước mốc quyết định. Replay cho xem dữ liệu tải sau
-mốc đó và luôn gắn cấp `EXPLORATORY_NON_PIT_DIAGNOSTIC_ONLY`. Không dùng tab
-này để giao dịch.
+## 1. Tin + Giá: quy tắc gán nhãn quyết định
 
-## Interface preview
+![Thẻ kết quả ETEL.EGX: nhãn Mua, điểm tin đã điều chỉnh theo độ mới, biến động 5 phiên, ngưỡng lịch sử và nhánh quy tắc được kích hoạt.](docs/images/decision-label-etel.png)
 
-The default US portfolio view uses a clearly labeled synthetic fixture. The desktop and mobile captures below show the interface; sample prices and headlines are not live market data.
+*Ảnh chụp một lượt chạy minh họa ngày 16/11/2026: FinBERT chấm tin, giá đóng cửa có dữ liệu đến 12/11/2026. Đây là dữ liệu ngày có độ trễ, không phải giá thời gian thực.*
 
-![Desktop view of the fixture-only US portfolio workbench](docs/images/us-portfolio-fixture.png)
+### Hệ thống gán nhãn như thế nào?
 
-![Mobile view of the fixture-only US portfolio workbench](docs/images/us-portfolio-fixture-mobile.png)
-Danh sách 50 mã nghiên cứu được đóng ngày 15/11/2026 trong
-`backend/universe/us_universe_v1.json`, với mã/sàn/CIK từ bảng ghép mã SEC.
-SEC không bảo đảm bảng đầy đủ hoặc luôn chính xác; bảng đó không chứng nhận loại
-cổ phiếu, thanh khoản hoặc vốn hóa. Danh sách này cần thẩm định độc lập trước
-khi dùng cho nghiên cứu giao dịch. Lịch NYSE được đóng theo lịch chính thức
-2026–2028; ngày đóng cửa đột xuất không thể được biết trước bởi file tĩnh.
+1. Chọn tin trực tiếp có mã doanh nghiệp khớp, xác suất FinBERT và thời điểm xuất bản hợp lệ trong cửa sổ 30 ngày trước ngày giá.
+2. Gom tiêu đề gần trùng thành nhóm tạm; một nhóm không được tính lặp như nhiều sự kiện độc lập.
+3. Tính điểm nhóm từ `P(tích cực) − P(tiêu cực)`, giảm trọng số theo tuổi tin với half-life 7 ngày. Từ đó tính điểm tin đã điều chỉnh `D = S × F`.
+4. Tính `R5` từ giá đóng cửa điều chỉnh hiện tại so với năm phiên trước. So sánh độ lớn với ngưỡng `B` (phân vị 75%) và `E` (phân vị 90%) của biến động năm phiên lịch sử của mã.
+5. Áp dụng bảng quy tắc và hiển thị lý do, điều kiện, nhóm tin, mức nhạy với tham số.
 
-API mới:
+| Nhãn | Ý nghĩa trong prototype |
+| --- | --- |
+| **Mua mạnh** | Điểm tin từ `+0,60`, giá tăng nhưng chưa vượt `B`, và số nhóm tin hiệu dụng đạt ít nhất 3. |
+| **Mua** | Điểm tin từ `+0,20`; giá chưa tăng hoặc giảm quá `B`; chưa thỏa đồng thời các điều kiện Mua mạnh. Với người đang nắm giữ, nhãn này nghĩa là cân nhắc mua thêm theo quy tắc. |
+| **Giữ** | Điểm tin trung tính, tin và giá trái chiều, hoặc tin tiêu cực chưa được giá xác nhận theo ngưỡng. |
+| **Bán** | Điểm tin từ `−0,20` trở xuống và giá giảm quá `B`. Với người đang nắm giữ, nhãn này nghĩa là cân nhắc giảm vị thế theo quy tắc. |
+| **Bán mạnh** | Điểm tin từ `−0,60` trở xuống, giá giảm quá `B`, và số nhóm tin hiệu dụng đạt ít nhất 3. |
+| **Chưa gán nhãn** | Thiếu giá ngày/lịch sử, hoặc không có nhóm tin trực tiếp đủ điều kiện. Thiếu dữ liệu không tự biến thành nhãn Giữ. |
 
-- `GET /api/v3/us/universe`: danh sách 50 mã và phạm vi nguồn.
-- `GET /api/v3/us/fixture`: lô tin giả lập để kiểm tra.
-- `POST /api/v3/us/portfolio/exposure`: tính trên input do caller cung cấp;
-  trả `coverage`, `covered_portfolio_score`, `raw_equity_weighted_score`,
-  kịch bản và phép tính cũ trên cùng lô.
-- `POST /api/v3/us/snapshot`: snapshot từ ledger, có chế độ PiT/replay, kịch bản
-  giá giả định, điểm FinBERT và nhật ký loại bản ghi.
-- `GET /api/v3/us/audit-summary`: thống kê ledger hiện tại và các báo cáo
-  Phase 3 đã tạo trong `artifacts/`.
+Các ngưỡng trên là **quy ước thử nghiệm ban đầu**, chưa được tối ưu hoặc kiểm định để chứng minh hiệu quả đầu tư. `B` và `E` mô tả biến động lịch sử; chúng không cho biết giá “đắt/rẻ”, không dự báo đảo chiều và không chứng minh tin gây ra biến động giá.
 
-Mọi timestamp và provenance tier ở POST là **khai báo của caller**, chưa phải
-chứng cứ PiT được xác nhận độc lập. Endpoint chặn timestamp thiếu timezone hoặc
-đến sau mốc quyết định, nhưng không thể chứng thực nhà cung cấp, quyền dữ liệu,
-thời điểm tin thực sự đến thị trường hoặc lịch sử giá. Xem
-`docs/US_PHASE1_STATUS.md` cho hợp đồng và giới hạn.
+![Bảng giải thích các nhánh của bộ quy tắc năm nhãn; dòng Mua đang được kích hoạt trong ví dụ.](docs/images/decision-rulebook-etel.png)
 
-Nguồn tham khảo:
-[SEC ticker/CIK/exchange](https://www.sec.gov/files/company_tickers_exchange.json),
-[NYSE calendar](https://www.nyse.com/trade/hours-calendars).
+## 2. Nghiên cứu EGX: FinBERT và phản ứng giá quan sát
 
-Nguyên mẫu phân tích sắc thái tiêu đề tin tài chính tiếng Anh cho cổ phiếu trên sàn Ai Cập EGX. Dự án kế thừa FinBERT và mở rộng cách tổng hợp, truy nguyên điểm tin, đối chiếu với giá ngày.
+Nhánh nghiên cứu này tái dựng và mở rộng một demo phân tích tin tài chính cho cổ phiếu trên sàn Ai Cập (EGX). FinBERT là mô hình pretrained của ProsusAI được tích hợp vào ứng dụng; đây không phải mô hình do dự án tự huấn luyện.
 
-## Chức năng
+- Lấy tiêu đề tin, xác định mã/doanh nghiệp, lưu thời điểm và nguồn để người xem kiểm tra lại.
+- Tổng hợp xác suất tích cực/trung tính/tiêu cực theo tin và theo danh mục; hỗ trợ điều chỉnh trọng số theo tỷ trọng vốn ở luồng danh mục.
+- Ở luồng Tin + Giá, đối chiếu từng nhóm tin với các cửa sổ giá 1, 3 và 5 phiên sau ngày đăng để mô tả **mối liên hệ quan sát được**. Các cửa sổ có thể chồng lấn và không xác định quan hệ nhân quả.
+- Lọc tin không liên quan, thiếu thời điểm hoặc chưa đủ bằng chứng doanh nghiệp; phần bị loại được ghi lý do.
 
-| Chức năng | Dữ liệu và kết quả |
-|---|---|
-| Một cổ phiếu | Thu thập tiêu đề, chấm xác suất tích cực/trung tính/tiêu cực |
-| Danh mục gốc | Tối đa 2 tin riêng mỗi mã và 4 tin vĩ mô, trung bình điểm từng tiêu đề |
-| Danh mục điều chỉnh theo vốn | Dùng chính lô tin gốc, điều chỉnh trọng số tin riêng theo vốn, hiển thị đóng góp từng tin |
-| Tin + Giá | Thu tin riêng, gom gần trùng, giảm theo tuổi, đối chiếu giá ngày và phát 5 nhãn theo quy tắc thử nghiệm |
+## 3. Danh mục Mỹ — Phase 1
 
-## Khởi chạy
+Phase 1 tách riêng khỏi nghiên cứu EGX và bộ quy tắc gán nhãn. Người dùng có thể khai báo số lượng cổ phiếu, tiền mặt, giá tham chiếu và biến động giả định để xem độ phủ tin, phơi nhiễm theo vốn và đóng góp của từng mã. Mục đích là làm rõ cách danh mục tổng hợp tín hiệu khi tỷ trọng vốn khác nhau.
 
-Cần Python 3.12. Node.js hỗ trợ các kiểm thử phép tính JavaScript. Chạy trong thư mục repository.
+![Giao diện danh mục cổ phiếu Mỹ Phase 1 trên bộ dữ liệu fixture được đánh dấu rõ là giả lập.](docs/images/us-portfolio-fixture.png)
+
+Fixture là dữ liệu minh họa do dự án tạo, không phải kết quả FinBERT hay dữ liệu thị trường trực tiếp. Nhánh sổ cái cục bộ có dữ liệu SEC/Alpaca hồi cứu và mức provenance riêng; bản ghi tải sau mốc quyết định được gắn nhãn replay ngoài PiT. Endpoint không thể tự chứng thực thời điểm phát hành thực tế, quyền dữ liệu hoặc chất lượng giá.
+
+Các mốc sau Phase 1 (sổ cái, PiT/replay và quy trình tạo tác vụ gán nhãn đánh giá) là các nhánh nghiên cứu riêng, được ghi rõ tình trạng trong tài liệu; không nên đọc như kết quả đã được benchmark độc lập. Bắt đầu từ [trạng thái US Phase 1](docs/US_PHASE1_STATUS.md), [US Phase 2](docs/US_PHASE2_STATUS.md), [giao thức gán nhãn Phase 2.5](docs/US_PHASE25_ANNOTATION_PROTOCOL.md) và [giao thức replay Phase 3](docs/US_PHASE3_SIGNAL_PROTOCOL.md).
+
+## Công nghệ và chạy thử
+
+**Python · FastAPI · FinBERT/Transformers · JavaScript · yfinance · SEC/Alpaca adapters (tùy cấu hình)**
+
+Cần Python 3.12. Tạo môi trường và cài dependency:
 
 ```powershell
 py -3.12 -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r requirements.txt
-$env:DEMO_MODE='live'
-$env:INFERENCE_PROVIDER='transformers-local'
+$env:DEMO_MODE='fixture'
 .\.venv\Scripts\python.exe -m uvicorn backend.app:app --host 127.0.0.1 --port 8124
 ```
 
-Mở http://127.0.0.1:8124 và tài liệu API tại http://127.0.0.1:8124/docs. Lần đầu model cần tải từ Hugging Face, cần mạng và thời gian khởi tạo. Các biến cấu hình đọc từ môi trường shell. File `.env.example` là mẫu tham khảo, ứng dụng chưa tự đọc file `.env`.
+Mở `http://127.0.0.1:8124`. Chế độ `fixture` cho phép xem giao diện mà không cần khóa nhà cung cấp; Tin + Giá sẽ không gán nhãn từ việc ghép tin giả lập với giá thật. Để chạy FinBERT cục bộ trên dữ liệu tin, cấu hình `INFERENCE_PROVIDER=transformers-local` và cài dependency mô hình; lần chạy đầu cần tải model từ Hugging Face. Các nguồn tin, giá và khóa tùy chọn được mô tả trong [`.env.example`](.env.example).
 
-Trên máy nghiên cứu đã có `C:\equara_tin_gia_env\Scripts\python.exe`, chạy
-`powershell -NoProfile -ExecutionPolicy Bypass -File scripts/start_equara_web.ps1`
-để mở web cục bộ một lần. Mở trực tiếp `frontend/index.html` bằng `file://`
-sẽ không kết nối được API.
+## Dự án cá nhân và cách ghi nhận đóng góp
 
-Để xem giao diện với dữ liệu minh họa, đặt `$env:DEMO_MODE='fixture'` trước khi chạy. Tin + Giá sẽ ghi rõ fixture và chưa phát nhãn từ việc ghép tin minh họa với giá thật.
+Đây là **dự án cá nhân**. Tôi xác định bài toán và phạm vi, đề ra yêu cầu cho luồng danh mục và Tin + Giá, rà kết quả demo, phản biện cách cân trọng số/hiển thị lý do và kiểm tra các giới hạn dữ liệu. Quá trình triển khai có sử dụng công cụ AI hỗ trợ đề xuất và sửa mã, tài liệu, kiểm thử; tôi không trình bày FinBERT pretrained hay toàn bộ mã nguồn như nghiên cứu/mã viết độc lập hoàn toàn. Chi tiết ở [`docs/PERSONAL_CONTRIBUTION.md`](docs/PERSONAL_CONTRIBUTION.md).
 
-EODHD News là tùy chọn. Đặt `EODHD_NEWS_API_TOKEN` cho hai luồng gốc/danh mục. `EODHD_TIN_GIA_NEWS_API_TOKEN` là cấu hình riêng cho Tin + Giá. Khi thiếu khóa, luồng RSS vẫn có thể chạy. Giá Tin + Giá lấy lịch sử Yahoo Finance qua yfinance. Giá ngày có độ trễ, phụ thuộc dữ liệu nguồn.
+## Ranh giới nghiên cứu
 
-Tab Danh mục Mỹ có lựa chọn fixture và snapshot từ sổ cái PiT. Thu thập SEC
-cần `SEC_EDGAR_USER_AGENT` có email; Alpaca news/giá cần `ALPACA_API_KEY` và
-`ALPACA_SECRET_KEY`. Không cấu hình thì fixture vẫn chạy. Lần quét đầu là dữ
-liệu hồi cứu. Giá Alpaca mặc định yêu cầu feed SIP; `ALPACA_PRICE_FEED=iex`
-cho nguồn chỉ báo nhưng không cho NAV hoàn chỉnh. Xem
-[trạng thái Phase 2](docs/US_PHASE2_STATUS.md) để hiểu cutoff, quyền dữ liệu,
-giới hạn SEC timestamp và cách đọc giá thô/điều chỉnh.
+- Nhãn là đầu ra của quy tắc giải thích được, **chưa backtest độc lập và chưa chứng minh lợi nhuận**.
+- Giá lịch sử theo ngày có độ trễ; chưa đối soát độc lập mọi phiên giao dịch và corporate actions.
+- Gom tiêu đề theo độ tương tự là nhóm tạm, có thể gộp nhầm hoặc bỏ sót tin trùng.
+- Kết quả phản ứng giá là tương quan quan sát; không suy diễn tin là nguyên nhân.
+- Đây là prototype phục vụ học tập và nghiên cứu; không phải tư vấn tài chính hay hệ thống giao dịch.
 
-Phase 2.5 có công cụ xuất tác vụ gán nhãn mù từ ledger, chia development/holdout
-theo cửa sổ mã/tuần, khóa nhãn bằng SHA-256 và đánh giá hai trục ngôn ngữ/hàm ý
-kinh tế. Chưa có kết quả benchmark thực khi chưa thu thập và gán nhãn dữ liệu.
-Xem [giao thức Phase 2.5](docs/US_PHASE25_ANNOTATION_PROTOCOL.md).
+## Tham khảo và ghi công
 
-Phase 3 có replay walk-forward hồi cứu trên sổ cái: so mô hình chỉ dùng giá
-với mô hình giá cộng sự kiện, chặn nhãn chưa trưởng thành, dùng giá mở cửa phiên
-kế tiếp làm proxy lợi suất. Kết quả hiện có là chẩn đoán không PiT; chưa có
-bằng chứng hiệu quả ngoài mẫu hoặc quyền phát nhãn giao dịch.
-Xem [giao thức Phase 3](docs/US_PHASE3_SIGNAL_PROTOCOL.md).
-
-Phase 3.1 có [lệnh quét hàng ngày và health check](docs/US_PHASE31_DAILY_CAPTURE.md).
-
-## Công thức đang hiển thị
-
-Điểm một tiêu đề `x = P(tích cực) − P(tiêu cực)`.
-
-Danh mục gốc lấy `S0 = Σx / N`. Nâng cấp đặt `q = K × w_i` cho từng tin riêng mã i và `q = 1` cho mỗi tin vĩ mô, với K là số mã và w là tỷ trọng vốn chuẩn hóa. Điểm mới `S = Σ(q × x) / Σq`. Đóng góp một tin là `q × x / Σq`.
-
-Khi vốn chia đều, mọi q bằng 1 nên điểm bằng chính bản gốc trên cùng response. Hai tab chia sẻ lô trong bộ nhớ của trang. Nút lấy lô mới cập nhật lô chung. Việc đổi vốn chỉ tính lại trọng số trong trình duyệt.
-
-**Hạn chế đã biết** — số tin từng mã và tin vĩ mô vẫn ảnh hưởng tỷ trọng hiệu dụng. Mã thiếu tin riêng có thể khiến vĩ mô chi phối điểm. Phương pháp hiện tại đáp ứng tính tương thích với phép tính gốc, còn yêu cầu phản ánh vốn thuần theo từng cổ phiếu cần tiếp tục hoàn thiện. Giao diện phân biệt vốn nhập với tỷ trọng trong phép tính.
-
-Tin + Giá dùng tin trực tiếp có ngày trước ngày giá từ 1–30 ngày, gom gần trùng theo từ và khoảng ngày, lấy điểm nhóm rồi giảm mũ với bán rã 7 ngày. `S_tin = Σws/Σw`, `F = Σw/m`, `D = S_tin × F`. Biến động `R5 = P_t/P_(t−5) − 1`, tính trên giá điều chỉnh. B/E là phân vị 75%/90% của độ lớn R5 quá khứ. Bộ quy tắc xét D, R5, B và số nhóm hiệu dụng để tạo Mua mạnh/Mua/Giữ/Bán/Bán mạnh. Các ngưỡng là quy ước thử nghiệm cần đánh giá tiếp.
-
-## Cấu trúc mã
-
-- `backend/app.py` khai báo FastAPI và các endpoint.
-- `backend/providers/` lấy tin và chạy model.
-- `backend/services/sentiment.py` triển khai bản tái dựng.
-- `frontend/original-capital.js` là công thức danh mục hiện tại trên giao diện.
-- `backend/upgrades/tin_gia/` triển khai luồng Tin + Giá riêng.
-- `backend/upgrades/coverage*` giữ phiên bản nghiên cứu trước, có tập tin và cách tính khác với tab hiện tại.
-- `tests/` kiểm thử logic, hồi quy và hợp đồng dữ liệu.
-- `notebooks/` notebook Colab của giai đoạn nghiên cứu trước.
-- `scripts/` công cụ chạy, đánh giá và tái lập. Các script `migrate_*`, `update_observed_*` là công cụ chuyển đổi một lần của giai đoạn cũ.
-- `docs/` gồm mô tả hiện tại và hồ sơ nghiên cứu theo ngày. Xem `docs/PROJECT_STATUS.md` trước khi đọc hồ sơ cũ.
-
-## Kiểm tra
-
-```powershell
-.\.venv\Scripts\python.exe -m pip install -r requirements-dev.txt
-.\.venv\Scripts\python.exe -m pytest -q
-```
-
-`requirements.lock.txt` ghi môi trường cũ để tham khảo tái lập. `requirements.txt` là danh sách cài đặt chính. Một số công cụ lịch sử cần snapshot trong `artifacts/` do người chạy tự thu thập.
-
-## Đóng góp và phạm vi
-
-Xem [đóng góp cá nhân](docs/PERSONAL_CONTRIBUTION.md), [trạng thái dự án](docs/PROJECT_STATUS.md) và [ghi nhận thành phần kế thừa](THIRD_PARTY_NOTICES.md).
-
-Dự án phục vụ học tập và minh họa cơ chế phân tích. Chưa có bằng chứng về lợi nhuận ngoài mẫu hoặc ngưỡng tối ưu. FinBERT đánh giá ngôn ngữ tiêu đề. Đóng góp số học vào điểm cần được phân biệt với tác động nhân quả lên giá.
+Bài viết tham khảo về luồng demo EGX: Mohamed Hendawy, *Sentiment Analysis for Egyptian Stocks*. Mô hình FinBERT được kế thừa từ [ProsusAI/finBERT](https://github.com/ProsusAI/finBERT); dự án không sửa repository upstream. Nguồn và các thông báo bên thứ ba nằm trong [tài liệu ghi công](docs/THIRD_PARTY_NOTICES.md).
