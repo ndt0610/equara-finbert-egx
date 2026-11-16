@@ -1,0 +1,64 @@
+{
+  "fixture_notice": "Toàn bộ giá và tiêu đề ở đây là dữ liệu giả lập để kiểm tra phép tính. Không phải giá thị trường hay kết quả FinBERT thực.",
+  "decision_at": "2026-11-13T22:00:00+00:00",
+  "price_as_of": "2026-11-13T21:00:00+00:00",
+  "price_ingested_at": "2026-11-13T21:10:00+00:00",
+  "news": [
+    {
+      "item_id": "demo-aapl-1",
+      "ticker": "AAPL",
+      "title": "DEMO: Apple reports stronger revenue",
+      "source": "Fixture only",
+      "source_kind": "news",
+      "url": null,
+      "published_at": "2026-11-13T18:00:00+00:00",
+      "ingested_at": "2026-11-13T18:05:00+00:00",
+      "scored_at": "2026-11-13T18:06:00+00:00",
+      "probabilities": {"positive": "1", "neutral": "0", "negative": "0"},
+      "event_key": null,
+      "provenance_tier": "FIXTURE_DEMO"
+    },
+    {
+      "item_id": "demo-aapl-2",
+      "ticker": "AAPL",
+      "title": "DEMO: Apple reports stronger revenue",
+      "source": "Fixture duplicate",
+      "source_kind": "news",
+      "url": null,
+      "published_at": "2026-11-13T18:00:00+00:00",
+      "ingested_at": "2026-11-13T18:10:00+00:00",
+      "scored_at": "2026-11-13T18:11:00+00:00",
+      "probabilities": {"positive": "1", "neutral": "0", "negative": "0"},
+      "event_key": null,
+      "provenance_tier": "FIXTURE_DEMO"
+    },
+    {
+      "item_id": "demo-msft-1",
+      "ticker": "MSFT",
+      "title": "DEMO: Microsoft lowers its outlook",
+      "source": "Fixture only",
+      "source_kind": "news",
+      "url": null,
+      "published_at": "2026-11-13T19:00:00+00:00",
+      "ingested_at": "2026-11-13T19:05:00+00:00",
+      "scored_at": "2026-11-13T19:06:00+00:00",
+      "probabilities": {"positive": "0", "neutral": "0", "negative": "1"},
+      "event_key": null,
+      "provenance_tier": "FIXTURE_DEMO"
+    },
+    {
+      "item_id": "demo-context-1",
+      "ticker": "MARKET",
+      "title": "DEMO: Broad market context headline",
+      "source": "Fixture only",
+      "source_kind": "context",
+      "url": null,
+      "published_at": "2026-11-13T19:30:00+00:00",
+      "ingested_at": "2026-11-13T19:35:00+00:00",
+      "scored_at": "2026-11-13T19:36:00+00:00",
+      "probabilities": {"positive": "0", "neutral": "0", "negative": "1"},
+      "event_key": null,
+      "provenance_tier": "FIXTURE_DEMO"
+    }
+  ]
+}

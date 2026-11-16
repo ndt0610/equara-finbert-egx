@@ -7,12 +7,13 @@ from pathlib import Path
 from typing import Any
 
 import httpx
-from fastapi import FastAPI, Query, Request
+from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.encoders import jsonable_encoder
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import FileResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
-from pydantic import BaseModel, ValidationError
+from pydantic import BaseModel, Field, ValidationError
+from typing import Literal
 
 from backend.config import MODEL_ID, Settings
 from backend.schemas import PortfolioAnalysisRequest, StockAnalysisRequest
@@ -23,6 +24,17 @@ from backend.upgrades.coverage_service import CoverageService
 from backend.upgrades.schemas import CoverageRequest, WeightedPortfolioRequest, parse_positions_query
 from backend.upgrades.service import UpgradedPortfolioService
 from backend.upgrades.tin_gia.context_service import TinGiaContextService
+from backend.contracts.pit_models import USPortfolioRequest
+from backend.services.portfolio_exposure import analyze_us_portfolio
+from backend.universe.catalog import load_universe
+from backend.storage.pit_ledger import PitLedger
+from backend.services.pit_decision_snapshot import build_snapshot
+from backend.services.us_audit_summary import audit_summary
+from backend.services.us_capture import capture_sec, capture_alpaca_news, capture_alpaca_prices, default_cutoff
+from backend.providers.us_market.sec_edgar_adapter import ProviderUnconfigured
+from backend.providers.us_market.us_price_adapter import AlpacaPriceAccessError
+from backend.providers.hf_inference import InferenceProviderError
+import json
 
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
@@ -141,6 +153,92 @@ async def stocks() -> dict[str, Any]:
         ],
         "note": "Ba mã ví dụ trong bài báo; API cũng nhận mã EGX khác theo định dạng mã.EGX.",
     }
+
+
+@app.get("/api/v3/us/universe")
+async def us_universe() -> dict[str, Any]:
+    return load_universe()
+
+
+@app.get("/api/v3/us/fixture")
+async def us_portfolio_fixture() -> dict[str, Any]:
+    return json.loads((ROOT_DIR / "fixtures" / "us_portfolio_phase1.json").read_text(encoding="utf-8"))
+
+
+@app.post("/api/v3/us/portfolio/exposure")
+async def us_portfolio_exposure(payload: USPortfolioRequest) -> dict[str, Any]:
+    try:
+        return analyze_us_portfolio(payload)
+    except ValueError as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+
+
+class UsCaptureRequest(BaseModel):
+    source: Literal["sec", "alpaca_news", "alpaca_prices"]
+    tickers: list[str] = Field(default_factory=list, max_length=50)
+    end_ts_utc: str | None = None
+
+
+class UsSnapshotRequest(BaseModel):
+    holdings: list[dict] = Field(min_length=1, max_length=20)
+    cash_usd: float = Field(default=0, ge=0)
+    decision_ts_utc: str | None = None
+    strict_pit_mode: bool = True
+    window_days: int = Field(default=7, ge=1, le=90)
+    relevance_filter: Literal["none", "exclude_noise"] = "exclude_noise"
+    scenario_returns: dict[str, float] = Field(default_factory=dict)
+
+
+@app.post("/api/v3/us/capture")
+async def us_capture(payload: UsCaptureRequest) -> dict[str, Any]:
+    tickers = payload.tickers or [x["ticker"] for x in load_universe()["items"]]
+    if len(tickers) != len(set(tickers)) or any(x not in {r["ticker"] for r in load_universe()["items"]} for x in tickers):
+        raise HTTPException(status_code=422, detail="INVALID_TICKERS")
+    ledger = PitLedger()
+    try:
+        if payload.source == "sec":
+            return await capture_sec(ledger, tickers)
+        if payload.source == "alpaca_news":
+            return await capture_alpaca_news(ledger, tickers)
+        end_ts = None
+        if payload.end_ts_utc:
+            from datetime import datetime
+            end_ts = datetime.fromisoformat(payload.end_ts_utc)
+        return await capture_alpaca_prices(ledger, tickers, end_ts_utc=end_ts)
+    except ProviderUnconfigured as exc:
+        raise HTTPException(status_code=503, detail=f"PROVIDER_UNCONFIGURED: {exc}") from exc
+    except InferenceProviderError as exc:
+        raise HTTPException(status_code=503, detail=f"FINBERT_UNAVAILABLE: {exc}") from exc
+    except AlpacaPriceAccessError as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
+    except httpx.HTTPError as exc:
+        raise HTTPException(status_code=502, detail=f"PROVIDER_UNAVAILABLE: {type(exc).__name__}") from exc
+    except (ValueError, KeyError) as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    finally:
+        ledger.close()
+
+
+@app.post("/api/v3/us/snapshot")
+async def us_snapshot(payload: UsSnapshotRequest) -> dict[str, Any]:
+    ledger = PitLedger()
+    try:
+        return build_snapshot(ledger, payload.decision_ts_utc or default_cutoff(), payload.holdings,
+                              payload.cash_usd, payload.strict_pit_mode, payload.window_days,
+                              payload.relevance_filter, payload.scenario_returns)
+    except (ValueError, KeyError) as exc:
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
+    finally:
+        ledger.close()
+
+
+@app.get('/api/v3/us/audit-summary')
+async def us_audit_summary() -> dict[str, Any]:
+    ledger = PitLedger()
+    try:
+        return audit_summary(ledger, ARTIFACTS_DIR)
+    finally:
+        ledger.close()
 
 
 @app.post("/api/sentiment/stock")

@@ -8,8 +8,24 @@ const modeBadge = $("#modeBadge");
 const modeNotice = $("#modeNotice");
 const inferenceFlowDetail = $("#inferenceFlowDetail");
 const newsFlowDetail = $("#newsFlowDetail");
+let lastHealth = null;
+let usLedgerCounts = null;
 
 function setModeBadge(health) {
+  lastHealth = health;
+  if ($("#usTab").classList.contains("active")) {
+    const captured = $("#usDataMode").value === "captured";
+    const replay = captured && $("#usTimeMode").value === "replay";
+    modeBadge.className = `mode-badge ${captured ? "mode-live" : "mode-fixture"}`;
+    const counts = usLedgerCounts ? ` · ${usLedgerCounts.sec_filings} SEC · ${usLedgerCounts.scored_news} tin · ${usLedgerCounts.sip_price_bars} giá SIP` : '';
+    modeBadge.textContent = captured ? (replay ? `US: replay hồi cứu${counts}` : `US: sổ cái PiT${counts}`) : "US: dữ liệu mẫu";
+    modeNotice.textContent = captured ? (replay ?
+      "ĐANG XEM REPLAY HỒI CỨU: dữ liệu có thể được Equara nhận sau mốc quyết định. Chỉ để chẩn đoán, không phải PiT." :
+      "ĐANG XEM SỔ CÁI PiT: chỉ dùng dữ liệu Equara đã nhận trước mốc quyết định. Tin và giá tải muộn sẽ bị loại.") :
+      "ĐANG XEM DỮ LIỆU MẪU: tiêu đề, xác suất và giá chỉ dùng để kiểm tra phép tính.";
+    modeNotice.className = captured ? "notice live-note" : "notice";
+    return;
+  }
   const provider = health.inference_provider || "hf-inference";
   modeBadge.className = `mode-badge ${health.data_mode === "fixture" ? "mode-fixture" : "mode-live"}`;
   modeBadge.textContent = health.data_mode === "fixture" ? "Dữ liệu minh họa" : "Dữ liệu thật";
@@ -66,6 +82,7 @@ const weightedPanel = $("#weightedPanel");
 const tinGiaTab = $("#tinGiaTab");
 const tinGiaPanel = $("#tinGiaPanel");
 const TABS = {
+  us: [$("#usTab"), $("#usPanel")],
   stock: [stockTab, stockPanel],
   portfolio: [portfolioTab, portfolioPanel],
   weighted: [weightedTab, weightedPanel],
@@ -80,9 +97,19 @@ function activateTab(tab) {
     panel.classList.toggle("hidden", !active);
   }
   resultPanel.classList.add("hidden");
+  document.querySelector(".flow-note").classList.toggle("hidden", tab === "us");
+  if (tab === "us") {
+    setModeBadge(lastHealth || {});
+  } else if (lastHealth) {
+    setModeBadge(lastHealth);
+  }
 }
 
 stockTab.addEventListener("click", () => activateTab("stock"));
+$("#usTab").addEventListener("click", () => activateTab("us"));
+$("#usDataMode").addEventListener("change", () => setModeBadge(lastHealth || {}));
+$("#usTimeMode").addEventListener("change", () => setModeBadge(lastHealth || {}));
+window.addEventListener('us-ledger-counts', event => { usLedgerCounts = event.detail; setModeBadge(lastHealth || {}); });
 portfolioTab.addEventListener("click", () => activateTab("portfolio"));
 weightedTab.addEventListener("click", () => activateTab("weighted"));
 tinGiaTab.addEventListener("click", () => { activateTab("tinGia"); renderTinGiaMarketView(); });
@@ -2095,4 +2122,5 @@ $("#tinGiaForm").addEventListener("submit", (event) => {
   submitAnalysis("/api/v1/tin-gia/stock?" + query, null, event.submitter, renderTinGiaResult);
 });
 
+activateTab("us");
 loadHealth();

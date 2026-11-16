@@ -3,41 +3,82 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Bản demo sentiment EGX tái dựng theo kiến trúc bài báo FinBERT.">
-  <title>Equara AI · Tin EGX theo mã và vốn</title>
-  <link rel="stylesheet" href="/static/style.css?v=observed-capital-v3">
+  <meta name="description" content="Equara: theo dõi thông tin danh mục Mỹ và đối chiếu nghiên cứu EGX.">
+  <title>Equara · Danh mục Mỹ và nghiên cứu tin</title>
+  <link rel="stylesheet" href="/static/style.css?v=us-ledger-workbench-v3">
 </head>
 <body>
   <div class="page-shell">
     <header class="topbar">
       <a class="brand" href="/" aria-label="Equara AI demo home">
         <span class="brand-mark">E</span>
-        <span><strong>Equara AI</strong><small>Tin EGX theo mã và vốn</small></span>
+        <span><strong>Equara AI</strong><small>Danh mục Mỹ · nghiên cứu EGX</small></span>
       </a>
       <div class="topbar-right">
         <span id="modeBadge" class="mode-badge mode-loading">Đang kiểm tra</span>
-        <span class="market-chip">EGX · Egypt</span>
+          <span class="market-chip">US PiT research · EGX legacy</span>
       </div>
     </header>
 
     <main>
       <section class="intro">
-        <div class="eyebrow">Tin doanh nghiệp · EGX</div>
-        <h1>Xem sắc thái tin<br><span>theo mã và tỷ trọng vốn.</span></h1>
-        <p>Bản tái dựng phục vụ học tập: điểm mô tả ngôn ngữ của tiêu đề đã tìm thấy, không phải dự báo giá hay tư vấn đầu tư.</p>
+        <div class="eyebrow">Danh mục cá nhân · thị trường Mỹ</div>
+        <h1>Biết phần vốn nào<br><span>đang có thông tin.</span></h1>
+        <p>Xem sắc thái tiêu đề, phần vốn được đại diện và kịch bản giá như các đại lượng riêng. Chọn dữ liệu mẫu hoặc sổ cái cục bộ; kiểm toán thực nghiệm được tách khỏi quyết định đầu tư.</p>
       </section>
 
       <div id="modeNotice" class="notice hidden" role="status"></div>
 
       <section class="workspace" aria-label="Phân tích sắc thái tin">
         <div class="tabs" role="tablist" aria-label="Loại phân tích">
-          <button id="stockTab" class="tab active" role="tab" aria-selected="true" type="button">Một cổ phiếu</button>
-          <button id="portfolioTab" class="tab" role="tab" aria-selected="false" type="button">Danh mục</button>
-          <button id="weightedTab" class="tab" role="tab" aria-selected="false" type="button">Danh mục theo vốn (nâng cấp)</button>
-          <button id="tinGiaTab" class="tab" role="tab" aria-selected="false" type="button">Tin + Giá</button>
+          <button id="usTab" class="tab active" role="tab" aria-selected="true" type="button">Danh mục Mỹ</button>
+          <button id="stockTab" class="tab" role="tab" aria-selected="false" type="button">EGX · một mã</button>
+          <button id="portfolioTab" class="tab" role="tab" aria-selected="false" type="button">EGX · danh mục gốc</button>
+          <button id="weightedTab" class="tab" role="tab" aria-selected="false" type="button">EGX · theo vốn cũ</button>
+          <button id="tinGiaTab" class="tab" role="tab" aria-selected="false" type="button">EGX · quy tắc thử nghiệm</button>
         </div>
 
-        <section id="stockPanel" class="input-panel" role="tabpanel">
+        <section id="usPanel" class="input-panel" role="tabpanel">
+          <div id="usFixtureBanner" class="us-banner"><strong>Dữ liệu minh họa · fixture</strong><span>Tiêu đề, xác suất và giá tham chiếu mẫu chỉ để kiểm tra phép tính. Bạn có thể thay số lượng, giá giả định, tiền mặt và kịch bản; không dùng kết quả mẫu để giao dịch.</span></div>
+          <label for="usDataMode">Chế độ dữ liệu</label>
+          <select id="usDataMode"><option value="fixture">FIXTURE_DEMO · dữ liệu mẫu</option><option value="captured">Sổ cái cục bộ (Captured)</option></select>
+          <div id="usCaptureControls" class="hidden us-capture-controls">
+            <p>Thu thập rõ nguồn trước khi xem snapshot. Quét SEC lần đầu là dữ liệu kéo lùi; Alpaca cần API key và quyền sử dụng phù hợp.</p>
+            <button id="usCaptureSec" type="button">Thu thập SEC</button>
+            <button id="usCaptureNews" type="button">Thu thập tin Alpaca</button>
+            <button id="usCapturePrices" type="button">Thu thập giá Alpaca</button>
+            <label for="usPriceEndUtc">Mốc kết thúc giá UTC (tùy chọn; SIP mặc định lùi 20 phút)</label>
+            <input id="usPriceEndUtc" type="text" placeholder="2026-11-13T21:00:00Z" spellcheck="false">
+            <label for="usDecisionCutoff">Mốc quyết định UTC (ISO 8601, bỏ trống = phiên NYSE hoàn tất gần nhất)</label>
+            <input id="usDecisionCutoff" type="text" placeholder="2026-11-13T21:15:00Z" spellcheck="false">
+            <label for="usTimeMode">Chế độ cắt thời gian</label>
+            <select id="usTimeMode">
+              <option value="strict" selected>PiT nghiêm ngặt · chỉ dùng dữ liệu đã nhận trước mốc</option>
+              <option value="replay">Replay hồi cứu · chỉ để chẩn đoán, không phải PiT</option>
+            </select>
+            <label for="usRelevanceFilter">Lọc tin nghi nhiễu trong điểm sắc thái</label>
+            <select id="usRelevanceFilter">
+              <option value="exclude_noise" selected>Lọc mẫu nghi nhiễu (quy tắc thử nghiệm)</option>
+              <option value="none">Giữ toàn bộ tin để đối chiếu</option>
+            </select>
+            <p id="usCaptureStatus" role="status"></p>
+            <button id="usLoadTen" type="button">Nạp danh sách mẫu 10 mã · 1 cổ phiếu/mã</button>
+          </div>
+          <form id="usForm">
+            <label id="usPositionsLabel" for="usPositions">Mỗi dòng: mã, số cổ phiếu, giá tham chiếu USD, thay đổi giả định (%)</label>
+            <textarea id="usPositions" rows="4" spellcheck="false">AAPL, 100, 100, 5
+MSFT, 100, 25, -4</textarea>
+            <label for="usCash">Tiền mặt USD</label>
+            <input id="usCash" type="number" min="0" step="any" value="0">
+              <p class="field-help">Danh sách nghiên cứu đóng ngày 15/11/2026 gồm 50 mã. Tối đa 20 vị thế. Sổ cái nhận mã, số cổ phiếu và kịch bản % tùy chọn; giá trị vị thế lấy từ close_raw. Danh sách mẫu không phải vị thế thật của bạn.</p>
+            <button class="primary-button" type="submit">Tính phơi nhiễm và kịch bản <span aria-hidden="true">→</span></button>
+          </form>
+          <p id="usError" class="us-error hidden" role="alert"></p>
+          <section id="usResult" class="us-result hidden" aria-live="polite"></section>
+          <section id="usAuditPanel" class="us-result hidden" aria-label="Kiểm toán thực nghiệm"></section>
+        </section>
+
+        <section id="stockPanel" class="input-panel hidden" role="tabpanel">
           <form id="stockForm">
             <label for="stockSymbol">Mã cổ phiếu EGX</label>
             <div class="input-row">
@@ -113,7 +154,7 @@
         <section id="result" class="result hidden" aria-live="polite"></section>
       </section>
 
-      <section class="flow-note" aria-label="Luồng xử lý">
+      <section class="flow-note" aria-label="Luồng xử lý EGX legacy">
         <div class="flow-step"><span>01</span><strong>Lấy tiêu đề tin</strong><small id="newsFlowDetail">EODHD News · RSS bổ sung</small></div>
         <div class="flow-arrow" aria-hidden="true">→</div>
         <div class="flow-step"><span>02</span><strong>FinBERT chấm tin</strong><small id="inferenceFlowDetail">Đang đọc cấu hình…</small></div>
@@ -123,11 +164,12 @@
     </main>
 
     <footer>
-      <span>Bản tái dựng kiến trúc · tiêu đề tiếng Anh · thị trường EGX</span>
+      <span>US: fixture hoặc snapshot PiT cục bộ · EGX: nguyên mẫu nghiên cứu trước</span>
       <a href="https://huggingface.co/ProsusAI/finbert" target="_blank" rel="noreferrer">Model: ProsusAI/finbert ↗</a>
     </footer>
   </div>
   <script src="/static/original-capital.js?v=original-batch-v1" defer></script>
-  <script src="/static/app.js?v=original-batch-v1" defer></script>
+  <script src="/static/app.js?v=us-ledger-workbench-v3" defer></script>
+  <script src="/static/us-portfolio.js?v=us-ledger-workbench-v3" defer></script>
 </body>
 </html>
